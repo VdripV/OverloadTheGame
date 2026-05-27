@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://bf6tfk5eurvvl"]
+
+[ext_resource type="Script" uid="uid://b42nu8if0khvc" path="res://enemies/enemy_bullet.gd" id="1_rvm4p"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xttcy"]
+albedo_color = Color(0.560208, 0.46083754, 0.078050934, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_dv88p"]
+material = SubResource("StandardMaterial3D_xttcy")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_4byai"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_voa1p"]
+
+[node name="EnemyBullet" type="RigidBody3D" unique_id=52005637]
+script = ExtResource("1_rvm4p")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=896888887]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+mesh = SubResource("SphereMesh_dv88p")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=322910398]
+shape = SubResource("SphereShape3D_4byai")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=987741373]
+collision_layer = 0
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=614524157]
+shape = SubResource("SphereShape3D_voa1p")
+
+[node name="Timer" type="Timer" parent="." unique_id=469613965]
+wait_time = 5.0
+one_shot = true

@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="Weapon_Resource" format=3 uid="uid://dteqy3u6ri7ju"]
+
+[ext_resource type="PackedScene" uid="uid://dl3s5of32pgx6" path="res://PlayerCharacter/WeaponManager/bulletG.tscn" id="1_5phhh"]
+[ext_resource type="Script" uid="uid://chb7ydncy2n24" path="res://PlayerCharacter/WeaponManager/weapon_resource.gd" id="1_iw3pr"]
+
+[resource]
+script = ExtResource("1_iw3pr")
+Weapon_Name = "blasterG"
+Activate_Anim = "blasterG Activate"
+Deactivate_Anim = "blasterG Deactivate"
+Shoot_Anim = "blasterG Shoot"
+Reload_Anim = "blasterG Reload"
+Out_Of_Ammo_Anim = "blasterG OOA"
+Melee_Anim = "blasterG Melee"
+Current_Ammo = 10
+Reserve_Ammo = 100
+Magazine = 10
+Max_Ammo = 100
+Weapon_Range = 1000
+Damage = 20
+Type = 2
+Projectile_To_Load = ExtResource("1_5phhh")
+Projectile_Velocity = 20

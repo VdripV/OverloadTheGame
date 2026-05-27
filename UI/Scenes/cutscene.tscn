@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://cf77p0h1xbuoe"]
+
+[ext_resource type="Script" uid="uid://cilch234gimlu" path="res://addons/UI/Scripts/cutscene.gd" id="1_1ve05"]
+[ext_resource type="AudioStream" uid="uid://bea3lwfha324g" path="res://addons/UI/Assets/Sounds/Klick.wav" id="2_1ve05"]
+[ext_resource type="FontFile" uid="uid://bnbkeynq2nhvs" path="res://addons/UI/Assets/Fonts/BuilderMono-Bold-700_0.ttf" id="3_nsknv"]
+
+[node name="Cutscene" type="Control" unique_id=1193587965]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1ve05")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=661370458]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=1924518595]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.076
+anchor_top = 0.127
+anchor_right = 0.75
+anchor_bottom = 0.67
+offset_left = -36.92
+offset_top = -34.160004
+offset_right = 121.0
+offset_bottom = 50.399963
+theme_override_fonts/normal_font = ExtResource("3_nsknv")
+theme_override_fonts/bold_font = ExtResource("3_nsknv")
+theme_override_font_sizes/normal_font_size = 56
+bbcode_enabled = true
+fit_content = true
+
+[node name="Label" type="Label" parent="." unique_id=620384500]
+modulate = Color(1, 1, 1, 0.4)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.938
+anchor_right = 0.5
+anchor_bottom = 0.948
+offset_left = -316.53998
+offset_top = -47.0
+offset_right = 316.53998
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 34
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1449428944]
+stream = ExtResource("2_1ve05")

@@ -1,0 +1,1367 @@
+[gd_scene format=3 uid="uid://bwggrf7sbmkcv"]
+
+[ext_resource type="Script" uid="uid://d3s8yxuvpmekm" path="res://PlayerCharacter/StateMachine/player_character_script.gd" id="1_h128t"]
+[ext_resource type="Script" uid="uid://b0fbr48rbvn27" path="res://PlayerCharacter/Camera/camera_script.gd" id="2_x12n0"]
+[ext_resource type="Script" uid="uid://8g033x6qm1rx" path="res://PlayerCharacter/StateMachine/fly_state_script.gd" id="9_ph066"]
+[ext_resource type="Script" uid="uid://hc1xroood24q" path="res://PlayerCharacter/StateMachine/slide_state_script.gd" id="10_poibi"]
+[ext_resource type="Script" uid="uid://c4skioddhqatw" path="res://PlayerCharacter/StateMachine/dash_state_script.gd" id="11_khex2"]
+[ext_resource type="Script" uid="uid://bq1stj2mujnp2" path="res://PlayerCharacter/StateMachine/wallrun_state_script.gd" id="12_5fuve"]
+[ext_resource type="LabelSettings" uid="uid://bs0stms0b56kp" path="res://Arts/label_settings.tres" id="14_gfbru"]
+[ext_resource type="Script" uid="uid://dl4tmfu7gxlt3" path="res://PlayerCharacter/WeaponManager/weapons_manager.gd" id="14_ifmfs"]
+[ext_resource type="Shader" uid="uid://b34228uop3gdf" path="res://PlayerCharacter/Shaders/speed_lines_shader.gdshader" id="14_jv0i6"]
+[ext_resource type="PackedScene" uid="uid://4y7sibohxkk5" path="res://SourceFiles/Weapons/blasterN.glb" id="14_pp6m3"]
+[ext_resource type="PackedScene" uid="uid://c86bkc760kvfe" path="res://SourceFiles/Weapons/blasterK.glb" id="15_ifmfs"]
+[ext_resource type="Script" uid="uid://chb7ydncy2n24" path="res://PlayerCharacter/WeaponManager/weapon_resource.gd" id="15_w05lp"]
+[ext_resource type="PackedScene" uid="uid://c110ye8p368sj" path="res://SourceFiles/Weapons/blasterD.glb" id="16_1dajo"]
+[ext_resource type="Script" uid="uid://dx02l6p6behb8" path="res://PlayerCharacter/UI/hud_script.gd" id="16_5jm78"]
+[ext_resource type="Texture2D" uid="uid://dv747ov6fcrsg" path="res://Arts/crosshair.png" id="16_gfbru"]
+[ext_resource type="Resource" uid="uid://rprvuama415r" path="res://ResourceFiles/blasterN.tres" id="16_gfley"]
+[ext_resource type="Resource" uid="uid://7dhn7807h7x1" path="res://ResourceFiles/blasterD.tres" id="17_m2cla"]
+[ext_resource type="StyleBox" uid="uid://c50syhy1a4dmh" path="res://PlayerCharacter/UI/player_character_ui_theme.tres" id="18_ovq28"]
+[ext_resource type="Resource" uid="uid://ci7hm8251osqd" path="res://ResourceFiles/blasterK.tres" id="18_s4fyg"]
+[ext_resource type="PackedScene" uid="uid://d0g7bj2r20lo3" path="res://SourceFiles/Weapons/Kenney Weapons/blasterG.glb" id="19_ohfgd"]
+[ext_resource type="Resource" uid="uid://dteqy3u6ri7ju" path="res://ResourceFiles/blasterG.tres" id="19_ql4cm"]
+[ext_resource type="PackedScene" uid="uid://dh8kle052d1yo" path="res://UI/Scenes/HUD.tscn" id="27_s4fyg"]
+[ext_resource type="Script" uid="uid://sca7ypsol83f" path="res://PlayerCharacter/StateMachine/state_machine_script.gd" id="54_e0r17"]
+[ext_resource type="Script" uid="uid://stil4xkf3tk0" path="res://PlayerCharacter/StateMachine/idle_state_script.gd" id="55_dayh2"]
+[ext_resource type="Script" uid="uid://blt7dest23fk0" path="res://PlayerCharacter/StateMachine/walk_state_script.gd" id="56_w3td4"]
+[ext_resource type="Script" uid="uid://5gk47o641xgt" path="res://PlayerCharacter/StateMachine/run_state_script.gd" id="57_gwv0a"]
+[ext_resource type="Script" uid="uid://dvu58wf01wils" path="res://PlayerCharacter/StateMachine/jump_state_script.gd" id="58_gwv0a"]
+[ext_resource type="Script" uid="uid://bh3rdvokmrar1" path="res://PlayerCharacter/StateMachine/inair_state_script.gd" id="59_bqtt6"]
+[ext_resource type="Script" uid="uid://bhoqhv7escpyx" path="res://PlayerCharacter/StateMachine/crouch_state_script.gd" id="60_tu3bf"]
+
+[sub_resource type="Curve" id="Curve_s7fsc"]
+_limits = [10.0, 30.0, 0.0, 60.0]
+_data = [Vector2(0, 10), 0.0, 0.0, 0, 0, Vector2(60, 30), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_gfbru"]
+_limits = [3.0, 30.0, 0.0, 30.0]
+_data = [Vector2(0, 3), 0.0, 0.0, 0, 0, Vector2(30, 30), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Animation" id="Animation_w05lp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("blasterN:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.018453661, -0.25180537, -0.33643693)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("blasterN:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("blasterN:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, -3.1415925, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("blasterD:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.042073384, -0.2497384, -0.33208558)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("blasterD:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("blasterD:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, -3.1415925, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("blasterK:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.024328757, -0.2546887, -0.4228403)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("blasterK:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("blasterK:rotation")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 3.1415925, 0)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Bullet_Point:position")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.16884387, -0.178532, -0.6616937)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("blasterG:position")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.0110946465, -0.24507922, -0.37656903)]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("blasterG:visible")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("blasterG:rotation")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, -3.1415927, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_dmd0o"]
+resource_name = "blasterD Activate"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("blasterD:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-0.30705276, -1.0681735, 0.35431194), Vector3(0.042073384, -0.2497384, -0.33208558)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("blasterD:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.16666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Bullet_Point:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.16884387, -0.178532, -0.6616937)]
+}
+
+[sub_resource type="Animation" id="Animation_f33hn"]
+resource_name = "blasterD Deactivate"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("blasterD:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.042073384, -0.2497384, -0.33208558), Vector3(-0.30705276, -1.0681735, 0.35431194)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("blasterD:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.17636336),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Bullet_Point:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.16884387, -0.178532, -0.6616937), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_s4fyg"]
+resource_name = "blasterD Melee"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("blasterD:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.018797988, 0.22044913, 0.49900115),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.042073384, -0.2497384, -0.33208558), Vector3(-0.043, -0.33, -0.268), Vector3(-0.002, -0.33, -0.268), Vector3(0.042073384, -0.2497384, -0.33208558)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("blasterD:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.018797988, 0.22044913, 0.49900115),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, -3.1415925, 0), Vector3(0.16303906, -1.5149108, -1.4173694), Vector3(0.16231562, -1.712168, -1.4172074), Vector3(0, -3.1415925, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_lxx5s"]
+resource_name = "blasterD OOA"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("blasterD:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.047992684, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0.042073384, -0.2497384, -0.33208558), Vector3(0.042, -0.25, -0.312), Vector3(0.042073384, -0.2497384, -0.33208558)]
+}
+
+[sub_resource type="Animation" id="Animation_rfs87"]
+resource_name = "blasterD Reload"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("blasterD:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3, 0.41925612, 0.53333336, 0.8666667, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.042073384, -0.2497384, -0.33208558), Vector3(-0.058147494, -0.2497384, -0.29350546), Vector3(-0.127, -0.25, -0.191), Vector3(-0.145, -0.094, -0.182), Vector3(-0.162, -0.12, -0.173), Vector3(-0.058147494, -0.2497384, -0.29350546), Vector3(0.042073384, -0.2497384, -0.33208558)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("blasterD:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3, 0.41925612, 0.53333336, 0.8666667, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, -3.1415925, 0), Vector3(0, -2.6842988, 0), Vector3(0.12566371, -2.195624, 0.22514747), Vector3(0.07853982, -2.0385447, 1.0210177), Vector3(0.034906585, -1.8867009, 0.86044735), Vector3(0.05235988, -2.6843164, 0), Vector3(0, -3.1415925, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_byxru"]
+resource_name = "blasterD Shoot"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("blasterD:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.013656455, 0.08662094, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.042073384, -0.2497384, -0.33208558), Vector3(0.042, -0.25, -0.3), Vector3(0.042, -0.23, -0.282), Vector3(0.042073384, -0.2497384, -0.33208558)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("blasterD:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.013656455, 0.08662094, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, -3.1415925, 0), Vector3(0, -3.1415927, 0), Vector3(-0.06981317, -3.1415927, 0), Vector3(0, -3.1415925, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ohfgd"]
+resource_name = "blasterG Activate"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("blasterG:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-0.457, -0.932, 0.39), Vector3(0.0110946465, -0.24507922, -0.37656903)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("blasterG:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.16),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_ql4cm"]
+resource_name = "blasterG Deactivate"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("blasterG:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.0110946465, -0.24507922, -0.37656903), Vector3(-0.457, -0.932, 0.39)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("blasterG:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.13304709),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_i3wqj"]
+resource_name = "blasterG OOA"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("blasterG:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0.0110946465, -0.24507922, -0.37656903), Vector3(0.011094646, -0.24507922, -0.35802823), Vector3(0.0110946465, -0.24507922, -0.37656903)]
+}
+
+[sub_resource type="Animation" id="Animation_kxghy"]
+resource_name = "blasterG Reload"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("blasterG:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.0110946465, -0.24507922, -0.37656903)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("blasterG:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.47211295, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, -3.1415927, 0), Vector3(-1.4573499, -3.1415927, 0), Vector3(0, -3.1415927, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_wyaf1"]
+resource_name = "blasterG Shoot"
+length = 0.56666666
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("blasterG:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.099999994, 0.56666666),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0.0110946465, -0.24507922, -0.37656903), Vector3(0.0110946465, -0.18202573, -0.37647074), Vector3(0.0110946465, -0.24507922, -0.37656903)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("blasterG:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.10232568, 0.56666666),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, -3.1415927, 0), Vector3(-0.16502088, -3.1415925, -3.2425625e-08), Vector3(0, -3.1415927, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_homgl"]
+resource_name = "blasterK Activate"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("blasterK:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-0.36105716, -1.0547593, 0.16331698), Vector3(0.024328757, -0.2546887, -0.4228403)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("blasterK:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.17029124),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_2gusm"]
+resource_name = "blasterK Deactivate"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("blasterK:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.024328757, -0.2546887, -0.4228403), Vector3(-0.36105716, -1.0547593, 0.16331698)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("blasterK:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.18462698),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_2qwnb"]
+resource_name = "blasterK OOA"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("blasterK:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.048220225, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0.024, -0.255, -0.423), Vector3(0.024, -0.255, -0.418), Vector3(0.024, -0.255, -0.423)]
+}
+
+[sub_resource type="Animation" id="Animation_8hm8b"]
+resource_name = "blasterK Reload"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("blasterK:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.04648256, 0.117726855, 0.19157764, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.024, -0.255, -0.423), Vector3(0.024, -0.201, -0.423), Vector3(0.024, -0.141, -0.423), Vector3(0.024, -0.201, -0.423), Vector3(0.024, -0.255, -0.423)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("blasterK:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.04648256, 0.117726855, 0.19157764, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 3.1415925, 0), Vector3(-0.38397244, 3.1415927, 0), Vector3(-0.87266463, 3.1415927, 0), Vector3(-0.38397244, 3.1415927, 0), Vector3(0, 3.1415925, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_jkcbg"]
+resource_name = "blasterK Shoot"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("blasterK:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.095571615, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0.024, -0.255, -0.423), Vector3(0.024, -0.255, -0.412), Vector3(0.024, -0.255, -0.423)]
+}
+
+[sub_resource type="Animation" id="Animation_gfley"]
+resource_name = "blasterN Activate"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("blasterN:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-0.36105716, -1.0547593, 0.16331698), Vector3(0.018453661, -0.25180537, -0.33643693)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("blasterN:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.16666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_m2cla"]
+resource_name = "blasterN Deactivate"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("blasterN:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.16543819),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("blasterN:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.018453661, -0.25180537, -0.33643693), Vector3(-0.36105716, -1.0547593, 0.16331698)]
+}
+
+[sub_resource type="Animation" id="Animation_8ke6w"]
+resource_name = "blasterN OOA"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("blasterN:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.04955342, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0.018453661, -0.25180537, -0.33643693), Vector3(0.018, -0.252, -0.316), Vector3(0.018453661, -0.25180537, -0.33643693)]
+}
+
+[sub_resource type="Animation" id="Animation_d68p1"]
+resource_name = "blasterN Reload"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("blasterN:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.13333334, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0.018453661, -0.25180537, -0.33643693), Vector3(0.018, -0.192, -0.336), Vector3(0.018453661, -0.25180537, -0.33643693)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("blasterN:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.05813748, 0.12173754, 0.16973023, 0.22513641, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, -3.1415925, 0), Vector3(-0.6981317, -3.1415927, 0), Vector3(-2.3038347, -3.1415927, 0), Vector3(-4.8171086, -3.1415927, 0), Vector3(-5.550147, -3.1415927, 0), Vector3(-6.2831855, -3.1415927, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_2pclp"]
+resource_name = "blasterN Shoot"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("blasterN:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.012485902, 0.041359548, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.018453661, -0.25180537, -0.33643693), Vector3(0.021608772, -0.25180537, -0.30854017), Vector3(0.022, -0.121, -0.309), Vector3(0.018453661, -0.25180537, -0.33643693)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("blasterN:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.012485902, 0.041359548, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, -3.1415925, 0), Vector3(-0.13613568, -3.1939526, 0.029670598), Vector3(-0.54105204, -3.1415927, 0.029670598), Vector3(0, -3.1415925, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2pclp"]
+_data = {
+&"RESET": SubResource("Animation_w05lp"),
+&"blasterD Activate": SubResource("Animation_dmd0o"),
+&"blasterD Deactivate": SubResource("Animation_f33hn"),
+&"blasterD Melee": SubResource("Animation_s4fyg"),
+&"blasterD OOA": SubResource("Animation_lxx5s"),
+&"blasterD Reload": SubResource("Animation_rfs87"),
+&"blasterD Shoot": SubResource("Animation_byxru"),
+&"blasterG Activate": SubResource("Animation_ohfgd"),
+&"blasterG Deactivate": SubResource("Animation_ql4cm"),
+&"blasterG OOA": SubResource("Animation_i3wqj"),
+&"blasterG Reload": SubResource("Animation_kxghy"),
+&"blasterG Shoot": SubResource("Animation_wyaf1"),
+&"blasterK Activate": SubResource("Animation_homgl"),
+&"blasterK Deactivate": SubResource("Animation_2gusm"),
+&"blasterK OOA": SubResource("Animation_2qwnb"),
+&"blasterK Reload": SubResource("Animation_8hm8b"),
+&"blasterK Shoot": SubResource("Animation_jkcbg"),
+&"blasterN Activate": SubResource("Animation_gfley"),
+&"blasterN Deactivate": SubResource("Animation_m2cla"),
+&"blasterN OOA": SubResource("Animation_8ke6w"),
+&"blasterN Reload": SubResource("Animation_d68p1"),
+&"blasterN Shoot": SubResource("Animation_2pclp")
+}
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5yjma"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6bkys"]
+albedo_color = Color(0.196078, 0.223529, 1, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_p2iaj"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_jv0i6"]
+frequency = 0.15
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_khex2"]
+noise = SubResource("FastNoiseLite_jv0i6")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_khex2"]
+shader = ExtResource("14_jv0i6")
+shader_parameter/noise = SubResource("NoiseTexture2D_khex2")
+shader_parameter/line_color = Color(1, 1, 1, 1)
+shader_parameter/line_count = 2.0
+shader_parameter/line_density = 0.800000038
+shader_parameter/line_faloff = 1.0
+shader_parameter/mask_size = 0.1
+shader_parameter/mask_edge = 0.800000038
+shader_parameter/animation_speed = 20.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_w05lp"]
+size = Vector3(2, 0.9491455, 2)
+
+[node name="PlayerCharacter" type="CharacterBody3D" unique_id=1479123383 groups=["PlayerCharacter"]]
+collision_layer = 2
+floor_block_on_wall = false
+floor_max_angle = 1.13446
+floor_snap_length = 0.0
+platform_floor_layers = 4278190081
+script = ExtResource("1_h128t")
+desired_move_speed_curve = SubResource("Curve_s7fsc")
+in_air_move_speed_curve = SubResource("Curve_gfbru")
+
+[node name="StateMachine" type="Node" parent="." unique_id=100687211 node_paths=PackedStringArray("initial_state")]
+script = ExtResource("54_e0r17")
+initial_state = NodePath("IdleState")
+
+[node name="IdleState" type="Node" parent="StateMachine" unique_id=369806622]
+script = ExtResource("55_dayh2")
+
+[node name="CrouchState" type="Node" parent="StateMachine" unique_id=1000284668]
+script = ExtResource("60_tu3bf")
+
+[node name="WalkState" type="Node" parent="StateMachine" unique_id=493694820]
+script = ExtResource("56_w3td4")
+
+[node name="RunState" type="Node" parent="StateMachine" unique_id=1416401148]
+script = ExtResource("57_gwv0a")
+
+[node name="JumpState" type="Node" parent="StateMachine" unique_id=1141935032]
+script = ExtResource("58_gwv0a")
+
+[node name="InairState" type="Node" parent="StateMachine" unique_id=44998657]
+script = ExtResource("59_bqtt6")
+
+[node name="SlideState" type="Node" parent="StateMachine" unique_id=1340789661]
+script = ExtResource("10_poibi")
+
+[node name="DashState" type="Node" parent="StateMachine" unique_id=1473584427]
+script = ExtResource("11_khex2")
+
+[node name="FlyState" type="Node" parent="StateMachine" unique_id=2025043059]
+script = ExtResource("9_ph066")
+
+[node name="WallrunState" type="Node" parent="StateMachine" unique_id=1561635657]
+script = ExtResource("12_5fuve")
+
+[node name="CameraHolder" type="Node3D" parent="." unique_id=1914342519]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.715, 0)
+script = ExtResource("2_x12n0")
+
+[node name="Camera" type="Camera3D" parent="CameraHolder" unique_id=568382183]
+unique_name_in_owner = true
+cull_mask = 1
+current = true
+fov = 90.0
+near = 0.01
+far = 1000.0
+
+[node name="CameraBasedRaycasts" type="Node3D" parent="CameraHolder/Camera" unique_id=1745086005]
+
+[node name="LeftWallCheck" type="RayCast3D" parent="CameraHolder/Camera/CameraBasedRaycasts" unique_id=1791109784]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.715, 0)
+exclude_parent = false
+target_position = Vector3(1, 0, 0)
+collision_mask = 4
+debug_shape_custom_color = Color(0.91764706, 0.79607844, 0.18039216, 1)
+
+[node name="RightWallCheck" type="RayCast3D" parent="CameraHolder/Camera/CameraBasedRaycasts" unique_id=1385706714]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.715, 0)
+exclude_parent = false
+target_position = Vector3(-1, 0, 0)
+collision_mask = 4
+debug_shape_custom_color = Color(0.91764706, 0.79607844, 0.18039216, 1)
+
+[node name="WeaponManager" type="Node3D" parent="CameraHolder/Camera" unique_id=1086934584]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.018243995, -0.92792505, 0.7562142)
+script = ExtResource("14_ifmfs")
+_weapon_resources = Array[ExtResource("15_w05lp")]([ExtResource("16_gfley"), ExtResource("18_s4fyg"), ExtResource("17_m2cla"), ExtResource("19_ql4cm")])
+Start_Weapons = Array[String](["blasterN", "blasterD", "blasterG"])
+
+[node name="FPS_Rig" type="Node3D" parent="CameraHolder/Camera/WeaponManager" unique_id=1739016042]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.018243995, 0.92792505, -0.7562142)
+
+[node name="blasterG" parent="CameraHolder/Camera/WeaponManager/FPS_Rig" unique_id=1292221328 instance=ExtResource("19_ohfgd")]
+transform = Transform3D(-1, 0, 6.119594e-08, 0, 0.99999994, 0, -8.742278e-08, 0, -0.7, 0.0110946465, -0.24507922, -0.37656903)
+visible = false
+
+[node name="blasterN" parent="CameraHolder/Camera/WeaponManager/FPS_Rig" unique_id=1094026602 instance=ExtResource("14_pp6m3")]
+transform = Transform3D(-0.9999998, 0, -1.5099576e-07, 0, 0.9999996, 0, 1.5099577e-07, 0, -0.99999976, 0.018453661, -0.25180537, -0.33643693)
+
+[node name="blasterK" parent="CameraHolder/Camera/WeaponManager/FPS_Rig" unique_id=296627505 instance=ExtResource("15_ifmfs")]
+transform = Transform3D(-1, 0, 1.509958e-07, 0, 1, 0, -1.509958e-07, 0, -1, 0.024328757, -0.2546887, -0.4228403)
+visible = false
+
+[node name="blasterD" parent="CameraHolder/Camera/WeaponManager/FPS_Rig" unique_id=1836753534 instance=ExtResource("16_1dajo")]
+transform = Transform3D(-0.9999999, 0, -1.509958e-07, 0, 0.9999999, 0, 1.5099579e-07, 0, -1, 0.042073384, -0.2497384, -0.33208558)
+visible = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CameraHolder/Camera/WeaponManager/FPS_Rig" unique_id=1831558696]
+libraries/ = SubResource("AnimationLibrary_2pclp")
+
+[node name="Bullet_Point" type="Marker3D" parent="CameraHolder/Camera/WeaponManager/FPS_Rig" unique_id=1505772637]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.16884387, -0.178532, -0.6616937)
+
+[node name="RayCast3D" type="RayCast3D" parent="CameraHolder/Camera/WeaponManager/FPS_Rig" unique_id=1355990807]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.16869035, -0.21333933, -0.5288507)
+target_position = Vector3(0, 0, -1)
+
+[node name="Hitbox" type="CollisionShape3D" parent="." unique_id=1746907327]
+shape = SubResource("CapsuleShape3D_5yjma")
+
+[node name="Model" type="MeshInstance3D" parent="." unique_id=548829856]
+layers = 2
+material_override = SubResource("StandardMaterial3D_6bkys")
+mesh = SubResource("CapsuleMesh_p2iaj")
+
+[node name="Raycasts" type="Node3D" parent="." unique_id=1016142199]
+visible = false
+
+[node name="CeilingCheck" type="RayCast3D" parent="Raycasts" unique_id=1252638733]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.758088, 0)
+exclude_parent = false
+target_position = Vector3(0, 3, 0)
+debug_shape_custom_color = Color(1, 0, 0, 1)
+
+[node name="FloorCheck" type="RayCast3D" parent="Raycasts" unique_id=364906292]
+unique_name_in_owner = true
+exclude_parent = false
+target_position = Vector3(0, -3, 0)
+debug_shape_custom_color = Color(0, 0.823529, 0.956863, 1)
+
+[node name="WallrunFloorCheck" type="RayCast3D" parent="Raycasts" unique_id=1829385493]
+unique_name_in_owner = true
+exclude_parent = false
+target_position = Vector3(0, -1.7, 0)
+debug_shape_custom_color = Color(0, 0.3372549, 0.7176471, 1)
+
+[node name="SlideFloorCheck" type="RayCast3D" parent="Raycasts" unique_id=1391277633]
+unique_name_in_owner = true
+exclude_parent = false
+target_position = Vector3(0, -3, 0)
+debug_shape_custom_color = Color(0, 0.823529, 0.956863, 1)
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1316895583 node_paths=PackedStringArray("play_char")]
+visible = false
+script = ExtResource("16_5jm78")
+play_char = NodePath("..")
+metadata/_edit_use_anchors_ = true
+
+[node name="SpeedLinesContainer" type="ColorRect" parent="HUD" unique_id=520360620]
+unique_name_in_owner = true
+visible = false
+material = SubResource("ShaderMaterial_khex2")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="Crosshair" type="TextureRect" parent="HUD" unique_id=485568366]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("16_gfbru")
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD" unique_id=1606957106]
+offset_right = 295.0
+offset_bottom = 376.0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+
+[node name="PanelContainer" type="PanelContainer" parent="HUD/MarginContainer" unique_id=447118211]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("18_ovq28")
+
+[node name="PlayCharInfos" type="HBoxContainer" parent="HUD/MarginContainer/PanelContainer" unique_id=861703371]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/MarginContainer/PanelContainer/PlayCharInfos" unique_id=469036318]
+layout_mode = 2
+
+[node name="CurrentStateLabel" type="Label" parent="HUD/MarginContainer/PanelContainer/PlayCharInfos/VBoxContainer" unique_id=1391695059]
+texture_filter = 1
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Current state : "
+label_settings = ExtResource("14_gfbru")
+vertical_alignment = 1
+
+[node name="DesiredMoveSpeedLabel" type="Label" parent="HUD/MarginContainer/PanelContainer/PlayCharInfos/VBoxContainer" unique_id=604850505]
+texture_filter = 1
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Desired move speed : "
+label_settings = ExtResource("14_gfbru")
+vertical_alignment = 1
+
+[node name="VelocityLabel" type="Label" parent="HUD/MarginContainer/PanelContainer/PlayCharInfos/VBoxContainer" unique_id=71959847]
+texture_filter = 1
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Velocity : "
+label_settings = ExtResource("14_gfbru")
+vertical_alignment = 1
+
+[node name="VelocityVectorLabel" type="Label" parent="HUD/MarginContainer/PanelContainer/PlayCharInfos/VBoxContainer" unique_id=226600831]
+texture_filter = 1
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Velocity vector : "
+label_settings = ExtResource("14_gfbru")
+vertical_alignment = 1
+
+[node name="IsOnFloorLabel" type="Label" parent="HUD/MarginContainer/PanelContainer/PlayCharInfos/VBoxContainer" unique_id=503802565]
+texture_filter = 1
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Is on floor :"
+label_settings = ExtResource("14_gfbru")
+vertical_alignment = 1
+
+[node name="CeilingCheckLabel" type="Label" parent="HUD/MarginContainer/PanelContainer/PlayCharInfos/VBoxContainer" unique_id=410164412]
+texture_filter = 1
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Ceiling raycast colliding :"
+label_settings = ExtResource("14_gfbru")
+vertical_alignment = 1
+
+[node name="JumpBufferLabel" type="Label" parent="HUD/MarginContainer/PanelContainer/PlayCharInfos/VBoxContainer" unique_id=732087694]
+texture_filter = 1
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Jump buffering  on :"
+label_settings = ExtResource("14_gfbru")
+vertical_alignment = 1
+
+[node name="CoyoteTimeLabel" type="Label" parent="HUD/MarginContainer/PanelContainer/PlayCharInfos/VBoxContainer" unique_id=602604800]
+texture_filter = 1
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Coyote time :"
+label_settings = ExtResource("14_gfbru")
+vertical_alignment = 1
+
+[node name="NbJumpsInAirAllowedLabel" type="Label" parent="HUD/MarginContainer/PanelContainer/PlayCharInfos/VBoxContainer" unique_id=264011223]
+texture_filter = 1
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Nb jumps in air allowed :"
+label_settings = ExtResource("14_gfbru")
+vertical_alignment = 1
+
+[node name="JumpCooldownLabel" type="Label" parent="HUD/MarginContainer/PanelContainer/PlayCharInfos/VBoxContainer" unique_id=1803774820]
+texture_filter = 1
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Time before can jump again :"
+label_settings = ExtResource("14_gfbru")
+vertical_alignment = 1
+
+[node name="SlideTimeLabel" type="Label" parent="HUD/MarginContainer/PanelContainer/PlayCharInfos/VBoxContainer" unique_id=2105511780]
+texture_filter = 1
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Slide time :"
+label_settings = ExtResource("14_gfbru")
+vertical_alignment = 1
+
+[node name="SlideCooldownLabel" type="Label" parent="HUD/MarginContainer/PanelContainer/PlayCharInfos/VBoxContainer" unique_id=2036109222]
+texture_filter = 1
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Time before can slide again :"
+label_settings = ExtResource("14_gfbru")
+vertical_alignment = 1
+
+[node name="NbDashsAllowedLabel" type="Label" parent="HUD/MarginContainer/PanelContainer/PlayCharInfos/VBoxContainer" unique_id=1691094448]
+texture_filter = 1
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Nb dashs allowed :"
+label_settings = ExtResource("14_gfbru")
+vertical_alignment = 1
+
+[node name="DashCooldownLabel" type="Label" parent="HUD/MarginContainer/PanelContainer/PlayCharInfos/VBoxContainer" unique_id=329809187]
+texture_filter = 1
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Time before can dash again :"
+label_settings = ExtResource("14_gfbru")
+vertical_alignment = 1
+
+[node name="WallrunTimeLabel" type="Label" parent="HUD/MarginContainer/PanelContainer/PlayCharInfos/VBoxContainer" unique_id=181156678]
+texture_filter = 1
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Wallrun time :"
+label_settings = ExtResource("14_gfbru")
+vertical_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="HUD/MarginContainer/PanelContainer/PlayCharInfos/VBoxContainer" unique_id=132616432]
+layout_mode = 2
+theme_override_constants/separation = 40
+
+[node name="CameraRotationLabel" type="Label" parent="HUD/MarginContainer/PanelContainer/PlayCharInfos/VBoxContainer" unique_id=1048965147]
+texture_filter = 1
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Camera rotation :"
+label_settings = ExtResource("14_gfbru")
+vertical_alignment = 1
+
+[node name="CurrentFOVLabel" type="Label" parent="HUD/MarginContainer/PanelContainer/PlayCharInfos/VBoxContainer" unique_id=1976515554]
+texture_filter = 1
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Current FOV :"
+label_settings = ExtResource("14_gfbru")
+vertical_alignment = 1
+
+[node name="CameraBobVerticalOffsetLabel" type="Label" parent="HUD/MarginContainer/PanelContainer/PlayCharInfos/VBoxContainer" unique_id=2003033345]
+texture_filter = 1
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Camera bob vertical offset :"
+label_settings = ExtResource("14_gfbru")
+vertical_alignment = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="HUD/MarginContainer/PanelContainer/PlayCharInfos" unique_id=1213238236]
+layout_mode = 2
+
+[node name="CurrentStateLabelText" type="Label" parent="HUD/MarginContainer/PanelContainer/PlayCharInfos/VBoxContainer2" unique_id=304302831]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "..................."
+label_settings = ExtResource("14_gfbru")
+vertical_alignment = 1
+
+[node name="DesiredMoveSpeedLabelText" type="Label" parent="HUD/MarginContainer/PanelContainer/PlayCharInfos/VBoxContainer2" unique_id=272875323]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "..................."
+label_settings = ExtResource("14_gfbru")
+vertical_alignment = 1
+
+[node name="VelocityLabelText" type="Label" parent="HUD/MarginContainer/PanelContainer/PlayCharInfos/VBoxContainer2" unique_id=1700199430]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "..................."
+label_settings = ExtResource("14_gfbru")
+vertical_alignment = 1
+
+[node name="VelocityVectorLabelText" type="Label" parent="HUD/MarginContainer/PanelContainer/PlayCharInfos/VBoxContainer2" unique_id=722445103]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "..................."
+label_settings = ExtResource("14_gfbru")
+vertical_alignment = 1
+
+[node name="IsOnFloorLabelText" type="Label" parent="HUD/MarginContainer/PanelContainer/PlayCharInfos/VBoxContainer2" unique_id=1319652046]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "..................."
+label_settings = ExtResource("14_gfbru")
+vertical_alignment = 1
+
+[node name="CeilingCheckLabelText" type="Label" parent="HUD/MarginContainer/PanelContainer/PlayCharInfos/VBoxContainer2" unique_id=1397619120]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "..................."
+label_settings = ExtResource("14_gfbru")
+vertical_alignment = 1
+
+[node name="JumpBufferLabelText" type="Label" parent="HUD/MarginContainer/PanelContainer/PlayCharInfos/VBoxContainer2" unique_id=195092234]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "..................."
+label_settings = ExtResource("14_gfbru")
+vertical_alignment = 1
+
+[node name="CoyoteTimeLabelText" type="Label" parent="HUD/MarginContainer/PanelContainer/PlayCharInfos/VBoxContainer2" unique_id=654422166]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "..................."
+label_settings = ExtResource("14_gfbru")
+vertical_alignment = 1
+
+[node name="NbJumpsInAirAllowedLabelText" type="Label" parent="HUD/MarginContainer/PanelContainer/PlayCharInfos/VBoxContainer2" unique_id=1109567037]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "..................."
+label_settings = ExtResource("14_gfbru")
+vertical_alignment = 1
+
+[node name="JumpCooldownLabelText" type="Label" parent="HUD/MarginContainer/PanelContainer/PlayCharInfos/VBoxContainer2" unique_id=128078213]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "..................."
+label_settings = ExtResource("14_gfbru")
+vertical_alignment = 1
+
+[node name="SlideTimeLabelText" type="Label" parent="HUD/MarginContainer/PanelContainer/PlayCharInfos/VBoxContainer2" unique_id=740891531]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "..................."
+label_settings = ExtResource("14_gfbru")
+vertical_alignment = 1
+
+[node name="SlideCooldownLabelText" type="Label" parent="HUD/MarginContainer/PanelContainer/PlayCharInfos/VBoxContainer2" unique_id=1336882427]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "..................."
+label_settings = ExtResource("14_gfbru")
+vertical_alignment = 1
+
+[node name="NbDashsAllowedLabelText" type="Label" parent="HUD/MarginContainer/PanelContainer/PlayCharInfos/VBoxContainer2" unique_id=1111790929]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "..................."
+label_settings = ExtResource("14_gfbru")
+vertical_alignment = 1
+
+[node name="DashCooldownLabelText" type="Label" parent="HUD/MarginContainer/PanelContainer/PlayCharInfos/VBoxContainer2" unique_id=1031722952]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "..................."
+label_settings = ExtResource("14_gfbru")
+vertical_alignment = 1
+
+[node name="WallrunTimeLabelText" type="Label" parent="HUD/MarginContainer/PanelContainer/PlayCharInfos/VBoxContainer2" unique_id=1231848827]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "..................."
+label_settings = ExtResource("14_gfbru")
+vertical_alignment = 1
+
+[node name="HSeparator2" type="HSeparator" parent="HUD/MarginContainer/PanelContainer/PlayCharInfos/VBoxContainer2" unique_id=540981524]
+layout_mode = 2
+theme_override_constants/separation = 40
+
+[node name="CameraRotationLabelText" type="Label" parent="HUD/MarginContainer/PanelContainer/PlayCharInfos/VBoxContainer2" unique_id=178564043]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "..................."
+label_settings = ExtResource("14_gfbru")
+vertical_alignment = 1
+
+[node name="CurrentFOVLabelText" type="Label" parent="HUD/MarginContainer/PanelContainer/PlayCharInfos/VBoxContainer2" unique_id=1676863525]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "..................."
+label_settings = ExtResource("14_gfbru")
+vertical_alignment = 1
+
+[node name="CameraBobVerticalOffsetLabelText" type="Label" parent="HUD/MarginContainer/PanelContainer/PlayCharInfos/VBoxContainer2" unique_id=551097124]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "..................."
+label_settings = ExtResource("14_gfbru")
+vertical_alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="HUD" unique_id=1041546736]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -167.0
+offset_bottom = 33.0
+grow_horizontal = 0
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+
+[node name="PanelContainer" type="PanelContainer" parent="HUD/MarginContainer2" unique_id=791354272]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("18_ovq28")
+
+[node name="PlayCharInfos2" type="HBoxContainer" parent="HUD/MarginContainer2/PanelContainer" unique_id=377337477]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/MarginContainer2/PanelContainer/PlayCharInfos2" unique_id=63828931]
+layout_mode = 2
+
+[node name="FramesPerSecondLabel" type="Label" parent="HUD/MarginContainer2/PanelContainer/PlayCharInfos2/VBoxContainer" unique_id=473328561]
+texture_filter = 1
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Frames per seconds : "
+label_settings = ExtResource("14_gfbru")
+vertical_alignment = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="HUD/MarginContainer2/PanelContainer/PlayCharInfos2" unique_id=155125185]
+layout_mode = 2
+
+[node name="FramesPerSecondLabelText" type="Label" parent="HUD/MarginContainer2/PanelContainer/PlayCharInfos2/VBoxContainer2" unique_id=1768462040]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "....."
+label_settings = ExtResource("14_gfbru")
+vertical_alignment = 1
+
+[node name="PickUpDetection" type="Area3D" parent="." unique_id=1445081878]
+collision_layer = 8
+collision_mask = 8
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PickUpDetection" unique_id=592314516]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.51840794, 0)
+shape = SubResource("BoxShape3D_w05lp")
+
+[node name="Hud" parent="." unique_id=1673443731 node_paths=PackedStringArray("player", "weapon_manager") instance=ExtResource("27_s4fyg")]
+player = NodePath("..")
+weapon_manager = NodePath("../CameraHolder/Camera/WeaponManager")
+
+[connection signal="change_fov" from="StateMachine" to="CameraHolder" method="change_fov"]
+[connection signal="animation_finished" from="CameraHolder/Camera/WeaponManager/FPS_Rig/AnimationPlayer" to="CameraHolder/Camera/WeaponManager" method="_on_animation_player_animation_finished"]
+[connection signal="body_entered" from="PickUpDetection" to="CameraHolder/Camera/WeaponManager" method="_on_pick_up_detection_body_entered"]

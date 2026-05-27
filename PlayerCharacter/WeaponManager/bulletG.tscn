@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://dl3s5of32pgx6"]
+
+[ext_resource type="Script" uid="uid://cg2v635tm2oo7" path="res://PlayerCharacter/WeaponManager/bulletG.gd" id="1_j3h7j"]
+
+[sub_resource type="Gradient" id="Gradient_708kk"]
+offsets = PackedFloat32Array(0, 0.2642706, 0.56236786, 0.987315)
+colors = PackedColorArray(0, 0, 0, 1, 0.04394865, 0.04394865, 0.04394865, 1, 0.25792813, 0.25792813, 0.25792813, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_j3h7j"]
+seed = 13
+frequency = 0.0618
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_gjhag"]
+noise = SubResource("FastNoiseLite_j3h7j")
+color_ramp = SubResource("Gradient_708kk")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fns2y"]
+albedo_color = Color(0, 0, 0, 1)
+emission_enabled = true
+emission = Color(0.28235295, 0.7019608, 0.5568628, 1)
+emission_energy_multiplier = 6.48
+emission_texture = SubResource("NoiseTexture2D_gjhag")
+
+[sub_resource type="SphereMesh" id="SphereMesh_3gkp5"]
+material = SubResource("StandardMaterial3D_fns2y")
+radius = 0.2
+height = 0.4
+radial_segments = 32
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_j3h7j"]
+radius = 0.171
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_gjhag"]
+
+[node name="bulletG" type="RigidBody3D" unique_id=1070973575]
+top_level = true
+collision_layer = 4
+collision_mask = 5
+mass = 0.5
+continuous_cd = true
+contact_monitor = true
+max_contacts_reported = 10
+script = ExtResource("1_j3h7j")
+
+[node name="bullet" type="MeshInstance3D" parent="." unique_id=1079834978]
+mesh = SubResource("SphereMesh_3gkp5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2146121334]
+transform = Transform3D(1.52, 0, 0, 0, 1.52, 0, 0, 0, 1.52, 0, 0, 0)
+shape = SubResource("SphereShape3D_j3h7j")
+disabled = true
+
+[node name="Timer" type="Timer" parent="." unique_id=1542395000]
+
+[node name="CollisionDetection" type="ShapeCast3D" parent="." unique_id=574130410]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 0, 0)
+shape = SubResource("SphereShape3D_gjhag")
+target_position = Vector3(0, 0, 0)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

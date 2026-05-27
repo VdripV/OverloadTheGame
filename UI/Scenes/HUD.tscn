@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://dh8kle052d1yo"]
+
+[ext_resource type="Script" uid="uid://dnpjqfrjyqwpi" path="res://addons/UI/Scripts/HUD.gd" id="1_b6acq"]
+
+[node name="Hud" type="Control" unique_id=1673443731]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_b6acq")
+
+[node name="Components" type="VBoxContainer" parent="." unique_id=1183896860]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HealthBar" type="HBoxContainer" parent="Components" unique_id=1759231338]
+layout_mode = 2
+
+[node name="HP" type="Label" parent="Components/HealthBar" unique_id=883724177]
+layout_mode = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="Components/HealthBar" unique_id=1135951173]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Components/HealthBar" unique_id=1341339037]
+layout_mode = 2
+
+[node name="ArmorBar" type="HBoxContainer" parent="Components" unique_id=529701733]
+layout_mode = 2
+
+[node name="ARM" type="Label" parent="Components/ArmorBar" unique_id=1058441584]
+layout_mode = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="Components/ArmorBar" unique_id=171444934]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Components/ArmorBar" unique_id=341789803]
+layout_mode = 2
+
+[node name="AmmoDisplay" type="HBoxContainer" parent="Components" unique_id=89123018]
+layout_mode = 2
+
+[node name="CurrentAmmo" type="Label" parent="Components/AmmoDisplay" unique_id=1644245232]
+layout_mode = 2
+
+[node name="ReserveAmmo" type="Label" parent="Components/AmmoDisplay" unique_id=1278999030]
+layout_mode = 2
+
+[node name="WeaponDisplay" type="HBoxContainer" parent="Components" unique_id=915047284]
+layout_mode = 2
+
+[node name="WeaponName" type="Label" parent="Components/WeaponDisplay" unique_id=1445491911]
+layout_mode = 2
+
+[node name="WeaponIcon" type="TextureRect" parent="Components/WeaponDisplay" unique_id=2002713058]
+layout_mode = 2

@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="Weapon_Resource" format=3 uid="uid://rprvuama415r"]
+
+[ext_resource type="PackedScene" uid="uid://dtd703gdi4qb3" path="res://PlayerCharacter/WeaponManager/bulletN.tscn" id="1_0n6wj"]
+[ext_resource type="Script" uid="uid://chb7ydncy2n24" path="res://PlayerCharacter/WeaponManager/weapon_resource.gd" id="1_grdni"]
+[ext_resource type="PackedScene" uid="uid://7m3mdu2x8gld" path="res://Map/Spawnable_Weapons/blaster_n.tscn" id="2_52s8l"]
+
+[resource]
+script = ExtResource("1_grdni")
+Weapon_Name = "blasterN"
+Activate_Anim = "blasterN Activate"
+Deactivate_Anim = "blasterN Deactivate"
+Shoot_Anim = "blasterN Shoot"
+Reload_Anim = "blasterN Reload"
+Out_Of_Ammo_Anim = "blasterN OOA"
+Melee_Anim = "blasterN Melee"
+Current_Ammo = 10
+Reserve_Ammo = 20
+Magazine = 10
+Max_Ammo = 20
+Weapon_Range = 1000
+Damage = 1
+Melee_Damage = 5
+Type = 2
+Projectile_To_Load = ExtResource("1_0n6wj")
+Projectile_Velocity = 40
+Weapon_Drop = ExtResource("2_52s8l")

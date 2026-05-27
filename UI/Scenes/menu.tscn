@@ -1,0 +1,67 @@
+[gd_scene format=3 uid="uid://dunxwr8j4oh07"]
+
+[ext_resource type="Script" uid="uid://tky6q4n2mooh" path="res://addons/UI/Scripts/menu.gd" id="1_hx3am"]
+
+[node name="Menu" type="Control" unique_id=425420161]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hx3am")
+
+[node name="Background" type="TextureRect" parent="." unique_id=227969163]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Overlay" type="ColorRect" parent="." unique_id=1665708815]
+layout_mode = 0
+offset_left = -77.0
+offset_top = -66.0
+offset_right = 159.0
+offset_bottom = 218.0
+
+[node name="Title" type="Label" parent="." unique_id=368901722]
+layout_mode = 0
+offset_left = -280.0
+offset_top = -306.0
+offset_right = 383.0
+offset_bottom = -101.0
+scale = Vector2(0.9434973, 0.8735858)
+theme_override_font_sizes/font_size = 150
+text = "Overload"
+vertical_alignment = 1
+
+[node name="Buttons" type="VBoxContainer" parent="." unique_id=398035082]
+layout_mode = 0
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 84.0
+offset_bottom = 99.0
+
+[node name="PlayButton" type="Button" parent="Buttons" unique_id=2086637872]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Play"
+
+[node name="SettingsButton" type="Button" parent="Buttons" unique_id=1255470273]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Settings"
+
+[node name="StatsButton" type="Button" parent="Buttons" unique_id=62850077]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Statistics"
+
+[node name="QuitButton" type="Button" parent="Buttons" unique_id=463299184]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Quit"

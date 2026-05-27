@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://djhok0gmwl5sv"]
+
+[ext_resource type="Script" uid="uid://cdhbxffajbm0x" path="res://enemies/flying_enemy.gd" id="1_7cs4o"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xh237"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_cob4l"]
+material = SubResource("StandardMaterial3D_xh237")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_pt75s"]
+
+[node name="FlyingEnemy" type="CharacterBody3D" unique_id=1385896642]
+script = ExtResource("1_7cs4o")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1861334931]
+mesh = SubResource("SphereMesh_cob4l")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1736040309]
+shape = SubResource("SphereShape3D_pt75s")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=514227609]
