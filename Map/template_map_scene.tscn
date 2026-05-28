@@ -15,6 +15,8 @@
 [ext_resource type="PackedScene" uid="uid://djhok0gmwl5sv" path="res://Map/MovementModifiers/conveyorZone/enemies/flying_enemy.tscn" id="13_4kf67"]
 [ext_resource type="PackedScene" uid="uid://dqm1p77wxcmdh" path="res://SourceFiles/box.tscn" id="14_tg4r2"]
 [ext_resource type="PackedScene" uid="uid://ycceh25m5av6" path="res://Map/Spawnable_Weapons/blaster_g.tscn" id="15_4kf67"]
+[ext_resource type="PackedScene" uid="uid://b4r4jtf0j42hg" path="res://enemies/explosive_enemy.tscn" id="16_tg4r2"]
+[ext_resource type="PackedScene" uid="uid://b8le38x6u2ec1" path="res://enemies/matreshka_enemy.tscn" id="17_u4pme"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_fjbi6"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -28,6 +30,9 @@ background_mode = 2
 sky = SubResource("Sky_43bpn")
 tonemap_mode = 2
 glow_enabled = true
+glow_intensity = 0.8
+glow_bloom = 0.1
+glow_hdr_threshold = 0.9
 
 [sub_resource type="Curve3D" id="Curve3D_q4rg5"]
 _data = {
@@ -437,3 +442,24 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.71289, 1, -27.466175)
 
 [node name="blasterG" parent="." unique_id=1458461875 instance=ExtResource("15_4kf67")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.300983, 2.1854217, -23.40154)
+
+[node name="Enemy2" parent="." unique_id=1089696843 instance=ExtResource("16_tg4r2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 81.00608, 1.7177534, -26.719978)
+
+[node name="Enemy3" parent="." unique_id=766087090 instance=ExtResource("16_tg4r2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80.05258, 1.7008126, -25.230707)
+
+[node name="Enemy4" parent="." unique_id=514104781 instance=ExtResource("16_tg4r2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80.772835, 1.9545925, -28.3191)
+
+[node name="Enemy5" parent="." unique_id=1954018962 instance=ExtResource("16_tg4r2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.34036, 1.5000019, 5.2976704)
+
+[node name="Enemy6" parent="." unique_id=1171907821 instance=ExtResource("17_u4pme")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 81.541824, 2.1103215, 27.778538)
+
+[node name="Enemy7" parent="." unique_id=937324284 instance=ExtResource("17_u4pme")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 88.721886, 2.226775, 24.199043)
+
+[node name="Enemy8" parent="." unique_id=1715349803 instance=ExtResource("17_u4pme")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 73.043045, 2.211839, 28.535048)

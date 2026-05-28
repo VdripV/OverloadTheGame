@@ -1,9 +1,15 @@
 [gd_scene format=3 uid="uid://bf6tfk5eurvvl"]
 
-[ext_resource type="Script" uid="uid://b42nu8if0khvc" path="res://enemies/enemy_bullet.gd" id="1_rvm4p"]
+[ext_resource type="Script" uid="uid://b42nu8if0khvc" path="res://Map/MovementModifiers/conveyorZone/enemies/enemy_bullet.gd" id="1_rvm4p"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xttcy"]
+transparency = 1
+blend_mode = 2
 albedo_color = Color(0.560208, 0.46083754, 0.078050934, 1)
+roughness = 0.2
+emission_enabled = true
+emission = Color(0.023399245, 0.7995858, 0.95257396, 1)
+emission_energy_multiplier = 2.0
 
 [sub_resource type="SphereMesh" id="SphereMesh_dv88p"]
 material = SubResource("StandardMaterial3D_xttcy")
@@ -12,11 +18,21 @@ material = SubResource("StandardMaterial3D_xttcy")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_voa1p"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sowjn"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 5.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_qadii"]
+material = SubResource("StandardMaterial3D_sowjn")
+radius = 0.1
+height = 0.2
+
 [node name="EnemyBullet" type="RigidBody3D" unique_id=52005637]
 script = ExtResource("1_rvm4p")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=896888887]
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+transform = Transform3D(0.37, 0, 0, 0, 0.37, 0, 0, 0, 0.37, 0, 0, 0)
 mesh = SubResource("SphereMesh_dv88p")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=322910398]
@@ -32,3 +48,6 @@ shape = SubResource("SphereShape3D_voa1p")
 [node name="Timer" type="Timer" parent="." unique_id=469613965]
 wait_time = 5.0
 one_shot = true
+
+[node name="Core" type="MeshInstance3D" parent="." unique_id=1264640652]
+mesh = SubResource("SphereMesh_qadii")
