@@ -26,6 +26,10 @@ window/size/viewport_width=1920
 window/size/viewport_height=1080
 window/size/mode=3
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/freecam_3D/plugin.cfg", "res://addons/meshlib_1.5/plugin.cfg")
+
 [input]
 
 weapon_up={

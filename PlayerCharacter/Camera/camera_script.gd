@@ -276,4 +276,4 @@ func mouse_mode() -> void:
 	#manage the mouse mode (visible = can use mouse on the screen, captured = mouse not visible and locked in at the center of the screen)
 	if Input.is_action_just_pressed(mouse_mode_action): mouse_free = !mouse_free
 	if !mouse_free: Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	else: Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	else: get_tree().change_scene_to_file("res://UI/Scenes/menu.tscn")

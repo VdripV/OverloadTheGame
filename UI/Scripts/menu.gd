@@ -9,6 +9,7 @@ const GAME_SCENE = "res://Map/template_map_scene.tscn"
 const SETTINGS_SCENE = "res://UI/Scenes/settings.tscn"
 
 func _ready() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	play_button.pressed.connect(_on_play_pressed)
 	settings_button.pressed.connect(_on_settings_pressed)
 	stats_button.pressed.connect(_on_stats_pressed)

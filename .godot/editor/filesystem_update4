@@ -1,9 +1,1 @@
-res://enemies/explosive_enemy.tscn
-res://enemies/explosive_enemy.gd
-res://Map/template_map_scene.tscn
-res://enemies/matreshka_enemy.tscn
-res://enemies/matreshka_enemy.gd
-res://enemies/mini_ranged_enemy.gd
-res://enemies/mini_ranged_enemy.tscn
-res://enemies/enemy_bullet.tscn
-res://enemies/enemy_bullet.gd
+res://UI/Scripts/menu.gd
