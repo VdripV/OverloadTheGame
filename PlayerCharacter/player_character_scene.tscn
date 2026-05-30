@@ -677,6 +677,34 @@ tracks/1/keys = {
 "values": [Vector3(0.018453661, -0.25180537, -0.33643693), Vector3(-0.36105716, -1.0547593, 0.16331698)]
 }
 
+[sub_resource type="Animation" id="Animation_67bvi"]
+resource_name = "blasterN Melee"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("blasterN:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0305153, 0.22716945, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.018453661, -0.25180537, -0.33643693), Vector3(-0.043, -0.33, -0.268), Vector3(-0.002, -0.33, -0.268), Vector3(0.018453661, -0.25180537, -0.33643693)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("blasterN:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0305153, 0.22716945, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, -3.1415925, 0), Vector3(0.16303906, -1.5149108, -1.4173694), Vector3(0.16231562, -1.712168, -1.4172074), Vector3(0, -3.1415925, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_8ke6w"]
 resource_name = "blasterN OOA"
 length = 0.1
@@ -770,6 +798,7 @@ _data = {
 &"blasterK Shoot": SubResource("Animation_jkcbg"),
 &"blasterN Activate": SubResource("Animation_gfley"),
 &"blasterN Deactivate": SubResource("Animation_m2cla"),
+&"blasterN Melee": SubResource("Animation_67bvi"),
 &"blasterN OOA": SubResource("Animation_8ke6w"),
 &"blasterN Reload": SubResource("Animation_d68p1"),
 &"blasterN Shoot": SubResource("Animation_2pclp")
