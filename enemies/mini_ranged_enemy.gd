@@ -154,7 +154,7 @@ func shoot_at_player(player):
 	bullet.global_position = global_position + (player.global_position - global_position).normalized() * 1.0
 	bullet.Damage = Damage
 	bullet.direction = (player.global_position - global_position).normalized()
-	bullet.look_at(global_position + bullet.direction, Vector3.UP)
+	bullet.look_at_from_position(global_position + bullet.direction, Vector3.UP)
 	get_parent().add_child(bullet)
 
 func set_state(new_state):
