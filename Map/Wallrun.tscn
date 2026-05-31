@@ -1,0 +1,170 @@
+[gd_scene format=3 uid="uid://bryybpnpxaik0"]
+
+[ext_resource type="Shader" uid="uid://cb4qovqsy48dv" path="res://SourceFiles/stylized_sky.gdshader" id="1_dpdfh"]
+[ext_resource type="PackedScene" uid="uid://bwggrf7sbmkcv" path="res://PlayerCharacter/player_character_scene.tscn" id="1_n4s71"]
+[ext_resource type="Script" uid="uid://jrq5106vmvtd" path="res://Map/game_manager.gd" id="1_wrq56"]
+[ext_resource type="MeshLibrary" uid="uid://cdnv28gu2gf4k" path="res://wallrunmesh.meshlib" id="3_dpdfh"]
+[ext_resource type="Script" uid="uid://dwnl3y5gsvvg3" path="res://Map/fall_zone.gd" id="4_mspd2"]
+[ext_resource type="Script" uid="uid://dpnhoyk81p03i" path="res://Map/check_point.gd" id="6_0fmlw"]
+[ext_resource type="PackedScene" uid="uid://dqm1p77wxcmdh" path="res://SourceFiles/box.tscn" id="7_0fmlw"]
+[ext_resource type="PackedScene" uid="uid://bqgwlh6y8rm1h" path="res://Map/MovementModifiers/conveyorZone/enemies/enemy.tscn" id="8_pcmid"]
+[ext_resource type="PackedScene" uid="uid://djhok0gmwl5sv" path="res://Map/MovementModifiers/conveyorZone/enemies/flying_enemy.tscn" id="9_fhaak"]
+
+[sub_resource type="Curve" id="Curve_mspd2"]
+_data = [Vector2(0.1011236, 0.8943089), 0.0, 0.0, 0, 0, Vector2(0.21629214, 0.27259684), 0.0, 0.0, 0, 0, Vector2(0.42977527, 1), 0.0, 0.0, 0, 0, Vector2(0.7668539, 1), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_n08c7"]
+curve = SubResource("Curve_mspd2")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_wrq56"]
+noise_type = 0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_0fmlw"]
+noise = SubResource("FastNoiseLite_wrq56")
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pcmid"]
+shader = ExtResource("1_dpdfh")
+shader_parameter/cloud_shape_sampler = SubResource("NoiseTexture2D_0fmlw")
+shader_parameter/cloud_noise_sampler = SubResource("NoiseTexture2D_0fmlw")
+shader_parameter/cloud_curves = SubResource("CurveTexture_n08c7")
+shader_parameter/clouds_samples = 16
+shader_parameter/shadow_sample = 4
+shader_parameter/clouds_density = 0.5
+shader_parameter/clouds_scale = 1.0
+shader_parameter/clouds_smoothness = 0.0999999977648
+shader_parameter/clouds_light_color = Color(1, 1, 1, 1)
+shader_parameter/clouds_shadow_intensity = 1.10000001639132
+shader_parameter/high_clouds_density = 0.0
+shader_parameter/top_color = Color(1, 1, 0.3764706, 1)
+shader_parameter/bottom_color = Color(0.8404179, 0.20976287, 0.49003196, 1)
+shader_parameter/sun_scatter = Color(0, 0.6209598, 0.501472, 1)
+shader_parameter/astro_tint = Color(1, 1, 1, 1)
+shader_parameter/astro_scale = 10.0
+shader_parameter/astro_intensity = 1.0
+shader_parameter/stars_intensity = 0.0
+shader_parameter/shooting_stars_intensity = 0.0
+shader_parameter/shooting_star_tint = Color(0, 0, 0, 1)
+
+[sub_resource type="Sky" id="Sky_udn8r"]
+sky_material = SubResource("ShaderMaterial_pcmid")
+
+[sub_resource type="Environment" id="Environment_fhaak"]
+background_mode = 2
+sky = SubResource("Sky_udn8r")
+tonemap_mode = 2
+glow_enabled = true
+adjustment_enabled = true
+adjustment_saturation = 1.5
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_n08c7"]
+size = Vector3(478, 27, 427)
+
+[node name="Wallrun" type="Node3D" unique_id=696882901]
+script = ExtResource("1_wrq56")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=502082003]
+transform = Transform3D(0.81699884, 0.20370063, 0.5394616, -0.5234374, -0.13050751, 0.84201014, 0.2419218, -0.9702957, 4.2412978e-08, 0, 69.31546, 0)
+light_energy = 1.023
+light_indirect_energy = 0.591
+light_volumetric_fog_energy = 0.16
+light_angular_distance = 14.93
+shadow_enabled = true
+shadow_opacity = 0.0
+directional_shadow_max_distance = 1200.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=644208720]
+environment = SubResource("Environment_fhaak")
+
+[node name="PlayerCharacter" parent="." unique_id=1479123383 instance=ExtResource("1_n4s71")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.035456, 22.702408, -5.2153196)
+
+[node name="GridMap" type="GridMap" parent="." unique_id=123801445]
+transform = Transform3D(6, 0, 0, 0, 6, 0, 0, 0, 6, 0, 0, 5.290895)
+mesh_library = ExtResource("3_dpdfh")
+cell_size = Vector3(1, 1, 1)
+cell_octant_size = 1
+collision_layer = 5
+collision_mask = 2
+data = {
+"cells": PackedInt32Array(1, 65533, 1441797, 1, 65531, 1441798, 0, 65530, 1441798, 1, 65529, 1441798, 2, 65528, 1441798, 0, 65526, 1441798, 1, 65525, 1441798, 2, 65527, 1441801, 2, 65525, 1441799, 131072, 65517, 1048576, 0, 65518, 1048578, 131080, 65517, 655367, 131084, 65518, 0, 262157, 65533, 655361, 262161, 65534, 655367, 262164, 65534, 655367, 262167, 65534, 655367, 262172, 65533, 1441792, 0, 65523, 1441798, 0, 65522, 1441798, 0, 65521, 1441798, 131078, 65518, 655367, 131081, 65518, 655367, 12, 65524, 1441796, 12, 65528, 1441796, 15, 65524, 655366, 15, 65526, 655366, 15, 65528, 655366, 15, 65530, 655366, 131083, 65525, 1048583, 131083, 65523, 1048583, 131083, 65527, 1048583, 131083, 65529, 1048583, 196621, 65530, 1441799, 131101, 65529, 1441797, 131100, 65526, 1441797, 131101, 65526, 1441797, 131102, 65526, 1441797, 131101, 65524, 655366)
+}
+metadata/_editor_floor_ = Vector3(0, 2, 0)
+
+[node name="FallZone" type="Area3D" parent="." unique_id=649112906]
+transform = Transform3D(16.34368, 0, 0, 0, 2.135664, 0, 0, 0, 1.5740288, -129, -66.35279, 24.123056)
+collision_layer = 5
+collision_mask = 2
+script = ExtResource("4_mspd2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FallZone" unique_id=1454298552]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.500004, 11, -140)
+shape = SubResource("BoxShape3D_n08c7")
+
+[node name="CheckPoint" type="Area3D" parent="." unique_id=1716343026]
+transform = Transform3D(0.1195982, 0, 0, 0, 0.45420107, 0, 0, 0, 0.035905987, 73.223785, 12.090082, -55.57842)
+collision_layer = 5
+collision_mask = 2
+script = ExtResource("6_0fmlw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CheckPoint" unique_id=1084922127]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 73.223755, 12.090078, -55.57837)
+shape = SubResource("BoxShape3D_n08c7")
+
+[node name="Box" parent="." unique_id=51119701 instance=ExtResource("7_0fmlw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.825239, 15.8565, -14.972693)
+
+[node name="Box2" parent="." unique_id=2081831785 instance=ExtResource("7_0fmlw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.452734, 15.8565, -14.96956)
+
+[node name="Box3" parent="." unique_id=786650153 instance=ExtResource("7_0fmlw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.212102, 17.050896, -14.96956)
+
+[node name="Box4" parent="." unique_id=118659369 instance=ExtResource("7_0fmlw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.318911, 17.050896, -67.93525)
+
+[node name="Enemy" parent="." unique_id=1087826163 instance=ExtResource("8_pcmid")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.086181, 14.6368, -17.876602)
+
+[node name="FlyingEnemy" parent="." unique_id=1385896642 node_paths=PackedStringArray("patrol_path") instance=ExtResource("9_fhaak")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.8066044, 25.66957, -66.877304)
+patrol_path = NodePath("../PatrolPath1")
+
+[node name="FlyingEnemy4" parent="." unique_id=1074320143 instance=ExtResource("9_fhaak")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.8066044, 15.358501, -67.6087)
+
+[node name="FlyingEnemy2" parent="." unique_id=1114902852 node_paths=PackedStringArray("patrol_path") instance=ExtResource("9_fhaak")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.3479853, 25.66957, -87.35796)
+patrol_path = NodePath("../PatrolPath2")
+
+[node name="FlyingEnemy3" parent="." unique_id=1928145279 node_paths=PackedStringArray("patrol_path") instance=ExtResource("9_fhaak")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.9554, 25.66957, -98.906204)
+patrol_path = NodePath("../PatrolPath3")
+
+[node name="PatrolPath1" type="Node3D" parent="." unique_id=1498154264]
+
+[node name="PatrolPoint1" type="Node3D" parent="PatrolPath1" unique_id=960918213]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.063553, 26.386267, -73.39113)
+
+[node name="PatrolPoint2" type="Node3D" parent="PatrolPath1" unique_id=368368713]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.098299, 25.67338, -72.29349)
+
+[node name="PatrolPath2" type="Node3D" parent="." unique_id=1487912243]
+
+[node name="PatrolPoint1" type="Node3D" parent="PatrolPath2" unique_id=25719518]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.201785, 24.92684, -111.018425)
+
+[node name="PatrolPoint2" type="Node3D" parent="PatrolPath2" unique_id=189256299]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.905401, 25.429045, -95.88839)
+
+[node name="PatrolPath3" type="Node3D" parent="." unique_id=1152623143]
+
+[node name="PatrolPoint1" type="Node3D" parent="PatrolPath3" unique_id=1731448712]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.650974, 26.249607, -112.42826)
+
+[node name="PatrolPoint2" type="Node3D" parent="PatrolPath3" unique_id=537409268]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56.50388, 26.3097, -100.3355)
+
+[connection signal="body_entered" from="FallZone" to="FallZone" method="_on_body_entered"]
+[connection signal="body_entered" from="CheckPoint" to="CheckPoint" method="_on_body_entered"]
