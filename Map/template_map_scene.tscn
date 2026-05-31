@@ -11,12 +11,16 @@
 [ext_resource type="PackedScene" uid="uid://8wolti2rkt2q" path="res://Map/Spawnable_Weapons/blaster_d.tscn" id="9_43v1x"]
 [ext_resource type="PackedScene" uid="uid://bxwjpayjtdd2g" path="res://Map/Spawnable_Weapons/blaster_k.tscn" id="10_pdlds"]
 [ext_resource type="PackedScene" uid="uid://7m3mdu2x8gld" path="res://Map/Spawnable_Weapons/blaster_n.tscn" id="11_7oo5g"]
-[ext_resource type="PackedScene" uid="uid://bqgwlh6y8rm1h" path="res://Map/MovementModifiers/conveyorZone/enemies/enemy.tscn" id="12_chpsd"]
-[ext_resource type="PackedScene" uid="uid://djhok0gmwl5sv" path="res://Map/MovementModifiers/conveyorZone/enemies/flying_enemy.tscn" id="13_4kf67"]
 [ext_resource type="PackedScene" uid="uid://dqm1p77wxcmdh" path="res://SourceFiles/box.tscn" id="14_tg4r2"]
 [ext_resource type="PackedScene" uid="uid://ycceh25m5av6" path="res://Map/Spawnable_Weapons/blaster_g.tscn" id="15_4kf67"]
 [ext_resource type="PackedScene" uid="uid://b4r4jtf0j42hg" path="res://enemies/explosive_enemy.tscn" id="16_tg4r2"]
 [ext_resource type="PackedScene" uid="uid://b8le38x6u2ec1" path="res://enemies/matreshka_enemy.tscn" id="17_u4pme"]
+[ext_resource type="PackedScene" uid="uid://dp2xwv368ud3k" path="res://enemies/enemy_spawner.tscn" id="18_ff8lg"]
+[ext_resource type="PackedScene" uid="uid://bqgwlh6y8rm1h" path="res://Map/MovementModifiers/conveyorZone/enemies/enemy.tscn" id="19_f2jo1"]
+[ext_resource type="PackedScene" uid="uid://djhok0gmwl5sv" path="res://enemies/flying_enemy.tscn" id="20_5q7o8"]
+[ext_resource type="PackedScene" uid="uid://dm8lyvvxwuspk" path="res://enemies/explosive_enemy_spawner.tscn" id="20_crb2t"]
+[ext_resource type="PackedScene" uid="uid://tjragqlxrky5" path="res://enemies/flying_enemy_spawner.tscn" id="21_ohmtu"]
+[ext_resource type="PackedScene" uid="uid://pqyhq7x27uqw" path="res://enemies/matreshka_enemy_spawner.tscn" id="23_3xxql"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_fjbi6"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -422,10 +426,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.389374, 1.9635483, -18.492
 [node name="blasterN" parent="." unique_id=375512202 instance=ExtResource("11_7oo5g")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.556976, 2.1313643, -20.774094)
 
-[node name="Enemy" parent="." unique_id=1087826163 instance=ExtResource("12_chpsd")]
+[node name="Enemy" parent="." unique_id=1087826163 instance=ExtResource("19_f2jo1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.075085, 1.5, -10.17486)
 
-[node name="FlyingEnemy" parent="." unique_id=1385896642 instance=ExtResource("13_4kf67")]
+[node name="FlyingEnemy" parent="." unique_id=1385896642 instance=ExtResource("20_5q7o8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.344463, 6.4850016, -1.1191697)
 
 [node name="Box" parent="." unique_id=51119701 instance=ExtResource("14_tg4r2")]
@@ -463,3 +467,24 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 88.721886, 2.226775, 24.19904
 
 [node name="Enemy8" parent="." unique_id=1715349803 instance=ExtResource("17_u4pme")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 73.043045, 2.211839, 28.535048)
+
+[node name="EnemySpawner" parent="." unique_id=1299883884 instance=ExtResource("18_ff8lg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.95281, 0.55, -38.46876)
+enemy_scene = ExtResource("19_f2jo1")
+spawn_count = 1
+spawn_radius = 5.0
+
+[node name="EnemySpawner2" parent="." unique_id=2107218993 instance=ExtResource("20_crb2t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56.76729, 0.5500005, -42.61886)
+enemy_scene = ExtResource("16_tg4r2")
+
+[node name="EnemySpawner3" parent="." unique_id=984153044 instance=ExtResource("21_ohmtu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50.926773, 0.55, -44.358013)
+enemy_scene = ExtResource("20_5q7o8")
+spawn_interval = 3.0
+max_enemies_alive = 3
+spawn_radius = 15.0
+
+[node name="EnemySpawner4" parent="." unique_id=626809331 instance=ExtResource("23_3xxql")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56.204056, 0.55, -36.822433)
+enemy_scene = ExtResource("17_u4pme")

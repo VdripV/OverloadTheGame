@@ -180,7 +180,6 @@ func target_in_ideal_range():
 
 func Hit_Successful(damage: int, _Direction := Vector3.ZERO, _Position := Vector3.ZERO):
 	Health -= damage
-	print("Mini Enemy Health: ", Health)
 	
 	if current_state == STATE.IDLE:
 		set_state(STATE.RUN)

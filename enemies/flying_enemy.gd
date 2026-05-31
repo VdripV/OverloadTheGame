@@ -1,6 +1,8 @@
 extends CharacterBody3D
 
 @onready var nav_agent = $NavigationAgent3D
+@onready var model: Node3D = $Rig
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 @export var patrol_path : Node3D
 
@@ -43,7 +45,6 @@ const SHOOT_COOLDOWN_TIME = 1.5
 
 func _ready():
 	add_to_group("Target")
-	collision_mask = 1
 	
 	if patrol_path != null:
 		for child in patrol_path.get_children():
@@ -66,7 +67,7 @@ func get_player():
 	var tree = get_tree()
 	if tree == null:
 		return null
-	var players = tree.get_nodes_in_group("player")
+	var players = tree.get_nodes_in_group("Player")
 	if players.size() > 0:
 		return players[0]
 	return null
@@ -83,6 +84,11 @@ func _physics_process(delta):
 			handle_run_state(delta)
 		STATE.ATTACK:
 			handle_attack_state(delta)
+
+func look_at_target(target: Vector3):
+	if model:
+		var aim_target = target + Vector3.UP * 1.0
+		model.look_at(aim_target, Vector3.UP, true)
 
 func handle_idle_state(delta):
 	velocity = Vector3.ZERO
@@ -116,7 +122,7 @@ func handle_patrol_state(delta):
 	if dist > 1.5:
 		var direction = (target - global_position).normalized()
 		velocity = direction * PATROL_SPEED
-		look_at(Vector3(target.x, global_position.y, target.z), Vector3.UP)
+		look_at_target(target)
 		patrol_wait_timer = 0.0
 	else:
 		velocity = Vector3.ZERO
@@ -147,7 +153,7 @@ func handle_investigate_state(delta):
 	if dist > 1.5:
 		var direction = (target - global_position).normalized()
 		velocity = direction * INVESTIGATE_SPEED
-		look_at(Vector3(target.x, global_position.y, target.z), Vector3.UP)
+		look_at_target(target)
 	else:
 		velocity = Vector3.ZERO
 		investigate_timer += delta
@@ -194,11 +200,11 @@ func handle_run_state(delta):
 		velocity = direction * SPEED
 	else:
 		velocity = Vector3.ZERO
-		look_at(Vector3(target.x, global_position.y, target.z), Vector3.UP)
+		look_at_target(target)
 		set_state(STATE.ATTACK)
 		return
 	
-	look_at(Vector3(target.x, global_position.y, target.z), Vector3.UP)
+	look_at_target(target)
 	move_and_slide()
 	
 	if not can_see_player():
@@ -210,7 +216,7 @@ func handle_attack_state(delta):
 		return
 	
 	velocity = Vector3.ZERO
-	look_at(Vector3(player.global_position.x, global_position.y, player.global_position.z), Vector3.UP)
+	look_at_target(player.global_position)
 	move_and_slide()
 	
 	shoot_cooldown += delta
@@ -242,6 +248,14 @@ func set_state(new_state):
 	current_state = new_state
 	state_timer = 0.0
 	shoot_cooldown = 0.0
+	
+	match current_state:
+		STATE.IDLE, STATE.PATROL, STATE.INVESTIGATE, STATE.RUN:
+			play_animation("Idle")
+		STATE.ATTACK:
+			play_animation("Attack")
+		STATE.DEATH:
+			play_animation("Hit")
 
 func can_see_player():
 	var player = get_player()
@@ -256,8 +270,15 @@ func target_in_ideal_range():
 	var dist = global_position.distance_to(player.global_position)
 	return dist > IDEAL_DISTANCE - 4.0 and dist < IDEAL_DISTANCE + 4.0
 
+func play_animation(anim_name: String):
+	if animation_player and animation_player.has_animation(anim_name):
+		animation_player.stop()
+		animation_player.play(anim_name)
+
 func Hit_Successful(damage: int, _Direction := Vector3.ZERO, _Position := Vector3.ZERO):
 	Health -= damage
+	
+	play_animation("Hit")
 	
 	if current_state == STATE.PATROL or current_state == STATE.INVESTIGATE:
 		var player = get_player()

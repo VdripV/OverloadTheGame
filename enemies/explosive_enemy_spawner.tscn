@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://dm8lyvvxwuspk"]
+
+[ext_resource type="Script" uid="uid://cps2nmblvqnlm" path="res://enemies/enemy_spawner.gd" id="1_w10nh"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_531ly"]
+albedo_color = Color(0.19076231, 0.19076234, 0.19076231, 1)
+roughness = 0.8
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_5lcht"]
+material = SubResource("StandardMaterial3D_531ly")
+top_radius = 0.8
+bottom_radius = 0.8
+height = 0.1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gdiwb"]
+albedo_color = Color(0.6319784, 0.34794298, 0.9889198, 1)
+emission_enabled = true
+emission = Color(0.5568858, 0.14274454, 0.89402264, 1)
+emission_energy_multiplier = 1.5
+
+[sub_resource type="TorusMesh" id="TorusMesh_lgub2"]
+material = SubResource("StandardMaterial3D_gdiwb")
+inner_radius = 0.7
+outer_radius = 0.8
+
+[node name="EnemySpawner" type="Node3D" unique_id=1299883884]
+script = ExtResource("1_w10nh")
+
+[node name="Base" type="MeshInstance3D" parent="." unique_id=798596022]
+mesh = SubResource("CylinderMesh_5lcht")
+
+[node name="Ring" type="MeshInstance3D" parent="." unique_id=644729724]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
+mesh = SubResource("TorusMesh_lgub2")
+
+[node name="Timer" type="Timer" parent="." unique_id=1636936544]
+wait_time = 5.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

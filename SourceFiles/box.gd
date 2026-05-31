@@ -31,8 +31,12 @@ func explode():
 	
 	hasExploded = true
 	
-	$MeshInstance3D.visible = false
-	$CollisionShape3D.set_deferred("disabled", true)
+	for child in get_children():
+		if child is MeshInstance3D:
+			child.visible = false
+	
+	if has_node("CollisionShape3D"):
+		$CollisionShape3D.set_deferred("disabled", true)
 	
 	var particles = particlesScene.instantiate()
 	particles.global_position = global_position
