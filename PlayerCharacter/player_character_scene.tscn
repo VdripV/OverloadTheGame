@@ -21,6 +21,7 @@
 [ext_resource type="Resource" uid="uid://ci7hm8251osqd" path="res://ResourceFiles/blasterK.tres" id="18_s4fyg"]
 [ext_resource type="PackedScene" uid="uid://d0g7bj2r20lo3" path="res://SourceFiles/Weapons/Kenney Weapons/blasterG.glb" id="19_ohfgd"]
 [ext_resource type="Resource" uid="uid://dteqy3u6ri7ju" path="res://ResourceFiles/blasterG.tres" id="19_ql4cm"]
+[ext_resource type="Script" uid="uid://cl01kihvm6cif" path="res://PlayerCharacter/speed_lines_container.gd" id="26_kxghy"]
 [ext_resource type="PackedScene" uid="uid://dh8kle052d1yo" path="res://UI/Scenes/HUD.tscn" id="27_s4fyg"]
 [ext_resource type="Script" uid="uid://sca7ypsol83f" path="res://PlayerCharacter/StateMachine/state_machine_script.gd" id="54_e0r17"]
 [ext_resource type="Script" uid="uid://stil4xkf3tk0" path="res://PlayerCharacter/StateMachine/idle_state_script.gd" id="55_dayh2"]
@@ -976,14 +977,12 @@ target_position = Vector3(0, -3, 0)
 debug_shape_custom_color = Color(0, 0.823529, 0.956863, 1)
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=1316895583 node_paths=PackedStringArray("play_char")]
-visible = false
 script = ExtResource("16_5jm78")
 play_char = NodePath("..")
 metadata/_edit_use_anchors_ = true
 
 [node name="SpeedLinesContainer" type="ColorRect" parent="HUD" unique_id=520360620]
 unique_name_in_owner = true
-visible = false
 material = SubResource("ShaderMaterial_khex2")
 anchors_preset = 15
 anchor_right = 1.0
@@ -991,6 +990,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
+script = ExtResource("26_kxghy")
 
 [node name="Crosshair" type="TextureRect" parent="HUD" unique_id=485568366]
 anchors_preset = 8
