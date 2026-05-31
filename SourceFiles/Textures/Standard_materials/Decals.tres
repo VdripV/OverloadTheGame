@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://cuxvnuc6toqe1"]
+
+[ext_resource type="Texture2D" uid="uid://dei0n4dejbcyq" path="res://SourceFiles/Textures/T_Decals.png" id="1_e1h1f"]
+
+[resource]
+albedo_color = Color(0, 0, 0, 1)
+detail_enabled = true
+detail_mask = ExtResource("1_e1h1f")

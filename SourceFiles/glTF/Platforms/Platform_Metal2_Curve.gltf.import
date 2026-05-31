@@ -37,6 +37,14 @@ import_script/path=""
 materials/extract=0
 materials/extract_format=0
 materials/extract_path=""
-_subresources={}
+_subresources={
+"materials": {
+"MI_Trim_02_Floor": {
+"use_external/enabled": false,
+"use_external/fallback_path": "res://SourceFiles/Textures/Columns_standard_materials/1_trim_02.tres",
+"use_external/path": "uid://b25vq4f14j2ob"
+}
+}
+}
 gltf/naming_version=2
 gltf/embedded_image_handling=1
