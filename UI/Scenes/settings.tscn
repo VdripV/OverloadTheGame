@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cugah2w13t0gc"]
 
-[ext_resource type="Script" uid="uid://wc4eejq6sns1" path="res://addons/UI/Scripts/settings.gd" id="1_srsvu"]
+[ext_resource type="Script" uid="uid://wc4eejq6sns1" path="res://UI/Scripts/settings.gd" id="1_srsvu"]
 
 [node name="Settings" type="Control" unique_id=1717901874]
 layout_mode = 3
@@ -117,14 +117,6 @@ layout_mode = 2
 
 [node name="KeybindsList" type="VBoxContainer" parent="Components/Keybinds" unique_id=2031207721]
 layout_mode = 2
-
-[node name="SaveButton" type="Button" parent="." unique_id=2029251791]
-visible = false
-layout_mode = 0
-offset_left = 3.0
-offset_top = 3.0
-offset_right = 22.0
-offset_bottom = 22.0
 
 [node name="CloseButton" type="Button" parent="." unique_id=1707386725]
 layout_mode = 0

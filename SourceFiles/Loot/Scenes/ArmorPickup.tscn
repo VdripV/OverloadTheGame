@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://bbf2tughlkhjd"]
+
+[ext_resource type="Script" uid="uid://cfwl8ehl8hvwo" path="res://SourceFiles/Loot/Scripts/ArmorPickup.gd" id="1_qh56x"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_eisoh"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_qh56x"]
+
+[node name="ArmorPickup" type="Node3D" unique_id=376920661]
+
+[node name="Area3D" type="Area3D" parent="." unique_id=389518781]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_qh56x")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=157394656]
+shape = SubResource("SphereShape3D_eisoh")
+debug_color = Color(6.738305e-07, 0.6454898, 0.26563063, 0.41960785)
+debug_fill = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D" unique_id=1492228936]
+mesh = SubResource("SphereMesh_qh56x")
+
+[node name="RayCast3D" type="RayCast3D" parent="Area3D" unique_id=378059823]

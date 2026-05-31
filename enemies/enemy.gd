@@ -3,6 +3,8 @@ extends CharacterBody3D
 @onready var nav_agent = $NavigationAgent3D
 
 @export var patrol_path : Node3D
+@export var health_pickup_scene: PackedScene
+@export var drop_chance: float = 1
 
 const SPEED = 5.5
 const ATTACK_RANGE = 3.0
@@ -264,7 +266,17 @@ func Hit_Successful(damage: int, _Direction := Vector3.ZERO, _Position := Vector
 		set_state(STATE.RUN)
 	
 	if Health <= 0:
+		var death_position = global_position
+		_drop_pickup(death_position)
 		queue_free()
+
+func _drop_pickup(death_position: Vector3) -> void:
+	if health_pickup_scene == null:
+		return
+	if randf() <= drop_chance:
+		var pickup = health_pickup_scene.instantiate()
+		get_parent().add_child(pickup)
+		pickup.global_position = death_position
 
 func _hit_finished() -> void:
 	var player = get_player()

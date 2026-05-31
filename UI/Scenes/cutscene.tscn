@@ -1,8 +1,9 @@
 [gd_scene format=3 uid="uid://cf77p0h1xbuoe"]
 
-[ext_resource type="Script" uid="uid://cilch234gimlu" path="res://addons/UI/Scripts/cutscene.gd" id="1_1ve05"]
-[ext_resource type="AudioStream" uid="uid://bea3lwfha324g" path="res://addons/UI/Assets/Sounds/Klick.wav" id="2_1ve05"]
-[ext_resource type="FontFile" uid="uid://bnbkeynq2nhvs" path="res://addons/UI/Assets/Fonts/BuilderMono-Bold-700_0.ttf" id="3_nsknv"]
+[ext_resource type="Script" uid="uid://cilch234gimlu" path="res://UI/Scripts/cutscene.gd" id="1_1ve05"]
+[ext_resource type="AudioStream" uid="uid://dk00sf3vimbap" path="res://UI/Assets/Sounds/click.wav" id="3_1eler"]
+[ext_resource type="FontFile" uid="uid://bnbkeynq2nhvs" path="res://UI/Assets/Fonts/BuilderMono-Bold-700_0.ttf" id="3_nsknv"]
+[ext_resource type="AudioStream" uid="uid://duhfo8li8r8uh" path="res://UI/Assets/Sounds/button.wav" id="4_iur5r"]
 
 [node name="Cutscene" type="Control" unique_id=1193587965]
 layout_mode = 3
@@ -56,5 +57,9 @@ theme_override_font_sizes/font_size = 34
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1449428944]
-stream = ExtResource("2_1ve05")
+[node name="AudioStreamPlayer1" type="AudioStreamPlayer" parent="." unique_id=1449428944]
+stream = ExtResource("3_1eler")
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="." unique_id=632610726]
+stream = ExtResource("4_iur5r")
+volume_db = -25.0

@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://djhok0gmwl5sv"]
 
-[ext_resource type="Script" uid="uid://cdhbxffajbm0x" path="res://Map/MovementModifiers/conveyorZone/enemies/flying_enemy.gd" id="1_7cs4o"]
+[ext_resource type="Script" uid="uid://cdhbxffajbm0x" path="res://enemies/flying_enemy.gd" id="1_3o2rm"]
+[ext_resource type="PackedScene" uid="uid://bbf2tughlkhjd" path="res://SourceFiles/Loot/Scenes/ArmorPickup.tscn" id="2_ix5i1"]
 [ext_resource type="Texture2D" uid="uid://b1pq5a5woc4hh" path="res://enemies_textures/glTF/T_Enemies_BaseColor_png.png" id="2_pt75s"]
 [ext_resource type="Texture2D" uid="uid://ftvq5vc6j703" path="res://enemies_textures/glTF/T_Enemies_ORM.png" id="3_3o2rm"]
 [ext_resource type="Texture2D" uid="uid://dqkt5ciiarxq0" path="res://enemies_textures/glTF/T_Enemies_Normal.png" id="4_ix5i1"]
@@ -563,7 +564,8 @@ states/Idle/position = Vector2(324, 88)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_1rsd6"), "Idle", "Attack", SubResource("AnimationNodeStateMachineTransition_wp7fr"), "Attack", "Idle", SubResource("AnimationNodeStateMachineTransition_cfi3l"), "Idle", "Hit", SubResource("AnimationNodeStateMachineTransition_br0c6"), "Hit", "Idle", SubResource("AnimationNodeStateMachineTransition_f1elg")]
 
 [node name="FlyingEnemy" type="CharacterBody3D" unique_id=1385896642]
-script = ExtResource("1_7cs4o")
+script = ExtResource("1_3o2rm")
+armor_pickup_scene = ExtResource("2_ix5i1")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1736040309]
 shape = SubResource("SphereShape3D_pt75s")

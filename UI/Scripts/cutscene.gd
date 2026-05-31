@@ -14,7 +14,8 @@ const PARAGRAPHS := [
 
 @onready var label      : RichTextLabel     = $RichTextLabel
 @onready var hint_label : Label             = $Label
-@onready var key_sound  : AudioStreamPlayer = $AudioStreamPlayer
+@onready var key_sound  : AudioStreamPlayer = $AudioStreamPlayer1
+@onready var hint_sound : AudioStreamPlayer = $AudioStreamPlayer2
 
 var _para_idx    : int   = 0
 var _char_idx    : int   = 0
@@ -37,7 +38,7 @@ func _ready():
 	label.text            = ""
 	hint_label.visible    = false
 	hint_label.modulate   = Color(1, 1, 1, 0.0)
-	await get_tree().create_timer(0.5).timeout
+	await get_tree().create_timer(1.0).timeout
 	_start_paragraph()
 
 func _process(delta: float):
@@ -87,6 +88,9 @@ func _on_paragraph_done():
 	else:
 		label.text      = _shown_text
 		hint_label.text = "ACCEPT THE «OVERLOAD» PROTOCOL"
+		await get_tree().create_timer(1.2).timeout  
+		if hint_sound and hint_sound.stream:
+			hint_sound.play()
 	_show_hint()
 
 func _show_hint():
@@ -94,6 +98,7 @@ func _show_hint():
 	_hint_fading = true
 	hint_label.modulate = Color(1, 1, 1, 0.0)
 	hint_label.visible  = true
+
 
 func _start_paragraph():
 	_char_idx    = 0

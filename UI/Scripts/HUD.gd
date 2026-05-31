@@ -14,7 +14,13 @@ extends Control
 
 @onready var weapon_name_label: Label = $Components/WeaponDisplay/WeaponName
 
+@onready var timer_label: Label = $TimerLabel
+
+var elapsed_time: float = 0.0
+var timer_running: bool = true
+
 func _ready() -> void:
+	add_to_group("hud")
 	_connect_signals()
 	_init_values()
 	
@@ -46,3 +52,19 @@ func _on_ammo_updated(ammo_data: Array) -> void:
 
 func _on_weapon_changed(weapon_name: String) -> void:
 	weapon_name_label.text = weapon_name
+	
+func _process(delta: float) -> void:
+	if timer_running:
+		elapsed_time += delta
+		_update_timer_label()
+
+func _update_timer_label() -> void:
+	var seconds: int = int(elapsed_time)
+	var milliseconds: int = int(fmod(elapsed_time, 1.0) * 100)
+	timer_label.text = "%d:%02d" % [seconds, milliseconds]
+	
+func stop_timer() -> void:
+	timer_running = false
+
+func get_time() -> float:
+	return elapsed_time

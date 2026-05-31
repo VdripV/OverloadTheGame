@@ -6,6 +6,8 @@ extends Node3D
 @export var max_enemies_alive: int = 5
 @export var spawn_radius: float = 1.0
 @export var auto_start: bool = true
+@export var health_pickup_scene: PackedScene
+@export var drop_chance: float = 1
 
 var enemies_alive: int = 0
 var is_active: bool = false
@@ -50,6 +52,10 @@ func spawn_enemy():
 	var offset = Vector3(cos(angle) * distance, 1.0, sin(angle) * distance)
 	
 	enemy.global_position = global_position + offset
+	
+	if "health_pickup_scene" in enemy:
+		enemy.health_pickup_scene = health_pickup_scene
+		enemy.drop_chance = drop_chance
 	
 	get_parent().add_child(enemy)
 	enemies_alive += 1

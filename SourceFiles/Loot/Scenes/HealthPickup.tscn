@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://vg7qxjhtbr0n"]
+
+[ext_resource type="Script" uid="uid://c6gkby34qprnu" path="res://SourceFiles/Loot/Scripts/HealthPickup.gd" id="1_1qmn8"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_b7fml"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_3tbtg"]
+
+[node name="HealthPickup" type="Node3D" unique_id=1598935974]
+
+[node name="Area3D" type="Area3D" parent="." unique_id=1865921019]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_1qmn8")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=918986004]
+shape = SubResource("SphereShape3D_b7fml")
+debug_color = Color(0.19191024, 0.52252203, 0.97578186, 0.41960785)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D" unique_id=2041998638]
+mesh = SubResource("SphereMesh_3tbtg")
+
+[node name="RayCast3D" type="RayCast3D" parent="Area3D" unique_id=964098696]

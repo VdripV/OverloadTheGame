@@ -17,7 +17,6 @@ func _ready() -> void:
 	_build_keybind_buttons()
 	_load_from_settings_data()
 	
-	$SaveButton.pressed.connect(_on_save_pressed)
 	$CloseButton.pressed.connect(_on_close_pressed)
 	sens_x_slider.value_changed.connect(_on_sens_x_changed)
 	sens_y_slider.value_changed.connect(_on_sens_y_changed)

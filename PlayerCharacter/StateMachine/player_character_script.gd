@@ -242,6 +242,8 @@ func _process(delta: float) -> void:
 	slide_timer(delta)
 	dash_timer(delta)
 	
+	
+	
 func _physics_process(_delta: float) -> void:
 	modify_physics_properties()
 	move_and_slide()
@@ -314,7 +316,14 @@ func hit(damage: int) -> void:
 	if is_dead or invincible:
 		return
 	
-	health -= damage
+	if armor > 0:
+		var armor_damage = min(damage, armor)
+		armor -= armor_damage
+		damage -= armor_damage
+	
+	if damage > 0:
+		health -= damage
+	
 	emit_signal("health_changed", health, max_health)
 	
 	if health <= 0:

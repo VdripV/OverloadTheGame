@@ -977,6 +977,7 @@ target_position = Vector3(0, -3, 0)
 debug_shape_custom_color = Color(0, 0.823529, 0.956863, 1)
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=1316895583 node_paths=PackedStringArray("play_char")]
+visible = false
 script = ExtResource("16_5jm78")
 play_char = NodePath("..")
 metadata/_edit_use_anchors_ = true

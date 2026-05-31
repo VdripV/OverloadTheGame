@@ -5,6 +5,8 @@ extends CharacterBody3D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 @export var patrol_path : Node3D
+@export var armor_pickup_scene: PackedScene
+@export var drop_chance: float = 1
 
 const SPEED = 7.0
 const ATTACK_RANGE = 15.0
@@ -278,8 +280,6 @@ func play_animation(anim_name: String):
 func Hit_Successful(damage: int, _Direction := Vector3.ZERO, _Position := Vector3.ZERO):
 	Health -= damage
 	
-	play_animation("Hit")
-	
 	if current_state == STATE.PATROL or current_state == STATE.INVESTIGATE:
 		var player = get_player()
 		if player:
@@ -287,4 +287,14 @@ func Hit_Successful(damage: int, _Direction := Vector3.ZERO, _Position := Vector
 		set_state(STATE.RUN)
 	
 	if Health <= 0:
+		var death_position = global_position
+		_drop_pickup(death_position)
 		queue_free()
+
+func _drop_pickup(death_position: Vector3) -> void:
+	if armor_pickup_scene == null:
+		return
+	if randf() <= drop_chance:
+		var pickup = armor_pickup_scene.instantiate()
+		get_parent().add_child(pickup)
+		pickup.global_position = death_position

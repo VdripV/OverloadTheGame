@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://diwimlbwp6g3e"]
+
+[ext_resource type="Script" uid="uid://cxuhwcidrfasg" path="res://SourceFiles/Loot/Scripts/AmmoStation.gd" id="1_hmhx5"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hmhx5"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_a1q6g"]
+
+[node name="AmmoStation" type="Area3D" unique_id=254746381]
+script = ExtResource("1_hmhx5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2117223518]
+shape = SubResource("BoxShape3D_hmhx5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1733860760]
+mesh = SubResource("BoxMesh_a1q6g")
