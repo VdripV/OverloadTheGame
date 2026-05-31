@@ -1,0 +1,19 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://q7fatnl85818"]
+
+[ext_resource type="Texture2D" uid="uid://dsc1cnlyxk3bw" path="res://SourceFiles/Textures/T_Trim_01_BaseColor.png" id="1_3b2w2"]
+[ext_resource type="Texture2D" uid="uid://dl02nkkarfqn5" path="res://SourceFiles/Textures/T_Trim_01_DetailMask.png" id="2_sv8xv"]
+[ext_resource type="Texture2D" uid="uid://dv4eiolfarcl3" path="res://SourceFiles/Textures/T_Trim_01_Emissive.png" id="3_3y2hc"]
+[ext_resource type="Texture2D" uid="uid://5jyxjn4b2s6b" path="res://SourceFiles/Textures/T_Trim_01_ORM.png" id="4_46e4l"]
+[ext_resource type="Texture2D" uid="uid://bub5mhykaq27y" path="res://SourceFiles/Textures/T_Trim_01_Normal.png" id="5_1lb3v"]
+
+[resource]
+albedo_texture = ExtResource("1_3b2w2")
+metallic = 1.0
+metallic_texture = ExtResource("4_46e4l")
+roughness_texture = ExtResource("4_46e4l")
+emission_enabled = true
+emission_texture = ExtResource("3_3y2hc")
+normal_enabled = true
+normal_texture = ExtResource("5_1lb3v")
+detail_enabled = true
+detail_mask = ExtResource("2_sv8xv")

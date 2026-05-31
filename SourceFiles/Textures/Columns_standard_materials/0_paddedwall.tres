@@ -1,0 +1,16 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bb0ugkks4s3n8"]
+
+[ext_resource type="Texture2D" uid="uid://bhw2ojij04kob" path="res://SourceFiles/Textures/T_PaddedWall_BaseColor.png" id="1_ku13y"]
+[ext_resource type="Texture2D" uid="uid://di527k8xwn131" path="res://SourceFiles/Textures/T_PaddingWall_Emissive.png" id="2_67ujs"]
+[ext_resource type="Texture2D" uid="uid://fh8looii30ox" path="res://SourceFiles/Textures/T_PaddedWall_ORM.png" id="3_623vi"]
+[ext_resource type="Texture2D" uid="uid://cmvuckp3ldvl1" path="res://SourceFiles/Textures/T_PaddedWall_Normal.png" id="4_l5ukl"]
+
+[resource]
+albedo_texture = ExtResource("1_ku13y")
+metallic = 1.0
+metallic_texture = ExtResource("3_623vi")
+roughness_texture = ExtResource("3_623vi")
+emission_enabled = true
+emission_texture = ExtResource("2_67ujs")
+normal_enabled = true
+normal_texture = ExtResource("4_l5ukl")

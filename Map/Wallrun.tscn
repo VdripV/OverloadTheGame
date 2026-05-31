@@ -2,7 +2,7 @@
 
 [ext_resource type="Shader" uid="uid://cb4qovqsy48dv" path="res://SourceFiles/stylized_sky.gdshader" id="1_dpdfh"]
 [ext_resource type="PackedScene" uid="uid://bwggrf7sbmkcv" path="res://PlayerCharacter/player_character_scene.tscn" id="1_n4s71"]
-[ext_resource type="Script" uid="uid://jrq5106vmvtd" path="res://Map/game_manager.gd" id="1_wrq56"]
+[ext_resource type="Script" uid="uid://jrq5106vmvtd" path="res://game_manager.gd" id="1_wrq56"]
 [ext_resource type="MeshLibrary" uid="uid://cdnv28gu2gf4k" path="res://wallrunmesh.meshlib" id="3_dpdfh"]
 [ext_resource type="Script" uid="uid://dwnl3y5gsvvg3" path="res://Map/fall_zone.gd" id="4_mspd2"]
 [ext_resource type="Script" uid="uid://dpnhoyk81p03i" path="res://Map/check_point.gd" id="6_0fmlw"]

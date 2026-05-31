@@ -19,6 +19,7 @@ config/features=PackedStringArray("4.6", "Forward Plus")
 Global="*uid://iov1u1jvipky"
 SettingsData="*uid://cix43troeaxqy"
 PauseHandler="*uid://dxdcujeklpo34"
+GameManager="*uid://jrq5106vmvtd"
 
 [display]
 
@@ -28,7 +29,7 @@ window/size/mode=3
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/freecam_3D/plugin.cfg", "res://addons/meshlib_1.5/plugin.cfg")
+enabled=PackedStringArray("res://addons/meshlib_1.5/plugin.cfg")
 
 [input]
 

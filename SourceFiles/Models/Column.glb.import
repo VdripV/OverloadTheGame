@@ -3,12 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bokff2ox3xj2"
-valid=false
+uid="uid://r6xgd1mgaac7"
+path="res://.godot/imported/Column.glb-e2f0eb9294af0bacd3f450543a57d6b1.scn"
 
 [deps]
 
-source_file="res://SourceFiles/glTF/Decals/Decal_Line_90.gltf"
+source_file="res://SourceFiles/Models/Column.glb"
+dest_files=["res://.godot/imported/Column.glb-e2f0eb9294af0bacd3f450543a57d6b1.scn"]
 
 [params]
 
