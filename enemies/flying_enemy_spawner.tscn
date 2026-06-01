@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://tjragqlxrky5"]
 
 [ext_resource type="Script" uid="uid://d0wfx0a7djk0g" path="res://enemies/flying_enemy_spawner.gd" id="1_5egj1"]
+[ext_resource type="PackedScene" uid="uid://djhok0gmwl5sv" path="res://enemies/flying_enemy.tscn" id="2_n45ne"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_531ly"]
 albedo_color = Color(0.19076231, 0.19076234, 0.19076231, 1)
@@ -25,6 +26,7 @@ outer_radius = 0.8
 
 [node name="EnemySpawner" type="Node3D" unique_id=1299883884]
 script = ExtResource("1_5egj1")
+enemy_scene = ExtResource("2_n45ne")
 
 [node name="Base" type="MeshInstance3D" parent="." unique_id=798596022]
 mesh = SubResource("CylinderMesh_5lcht")

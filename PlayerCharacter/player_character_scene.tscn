@@ -912,7 +912,7 @@ debug_shape_custom_color = Color(0.91764706, 0.79607844, 0.18039216, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.018243995, -0.92792505, 0.7562142)
 script = ExtResource("14_ifmfs")
 _weapon_resources = Array[ExtResource("15_w05lp")]([ExtResource("16_gfley"), ExtResource("18_s4fyg"), ExtResource("17_m2cla"), ExtResource("19_ql4cm")])
-Start_Weapons = Array[String](["blasterN", "blasterD", "blasterG"])
+Start_Weapons = Array[String](["blasterN", "blasterD", "blasterG", "blasterK"])
 
 [node name="FPS_Rig" type="Node3D" parent="CameraHolder/Camera/WeaponManager" unique_id=1739016042]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.018243995, 0.92792505, -0.7562142)

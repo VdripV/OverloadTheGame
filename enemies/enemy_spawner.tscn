@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dp2xwv368ud3k"]
 
 [ext_resource type="Script" uid="uid://cps2nmblvqnlm" path="res://enemies/enemy_spawner.gd" id="1_mjbfh"]
+[ext_resource type="PackedScene" uid="uid://bqgwlh6y8rm1h" path="res://enemies/enemy.tscn" id="2_5lcht"]
 [ext_resource type="PackedScene" uid="uid://vg7qxjhtbr0n" path="res://SourceFiles/Loot/Scenes/HealthPickup.tscn" id="2_531ly"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_531ly"]
@@ -26,6 +27,7 @@ outer_radius = 0.8
 
 [node name="EnemySpawner" type="Node3D" unique_id=1299883884]
 script = ExtResource("1_mjbfh")
+enemy_scene = ExtResource("2_5lcht")
 health_pickup_scene = ExtResource("2_531ly")
 
 [node name="Base" type="MeshInstance3D" parent="." unique_id=798596022]

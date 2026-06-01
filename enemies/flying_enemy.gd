@@ -9,14 +9,14 @@ extends CharacterBody3D
 @export var drop_chance: float = 1
 
 const SPEED = 7.0
-const ATTACK_RANGE = 15.0
-const DETECTION_RANGE = 30.0
+const ATTACK_RANGE = 30.0
+const DETECTION_RANGE = 50.0
 const IDEAL_DISTANCE = 12.0
 const INVESTIGATE_TIME = 3.0
 const PATROL_SPEED = 4.0
 const INVESTIGATE_SPEED = 5.0
 
-var Damage = 35
+var Damage = 3
 var Health = 3
 
 enum STATE {

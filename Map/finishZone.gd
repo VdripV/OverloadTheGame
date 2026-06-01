@@ -1,7 +1,7 @@
 extends Area3D
 
 const MENU_SCENE = "res://UI/Scenes/menu.tscn"
-@export var level_name: String = "Level_1"
+@export var level_name: String
 
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)

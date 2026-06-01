@@ -7,7 +7,7 @@ extends Control
 @onready var hover_sound: AudioStreamPlayer = $AudioStreamPlayer
 @onready var click_sound: AudioStreamPlayer = $AudioStreamPlayer2
 
-const GAME_SCENE = "res://Map/Space_arena.tscn"
+const GAME_SCENE = "res://Map/example_map.tscn"
 const SETTINGS_SCENE = "res://UI/Scenes/settings.tscn"
 const STATS_SCENE = "res://UI/Scenes/statistics.tscn"
 

@@ -1,0 +1,375 @@
+[gd_scene format=3 uid="uid://dvgytwq1pta54"]
+
+[ext_resource type="Material" uid="uid://cmlreoo2qwhp4" path="res://Arts/structure_material.tres" id="1_mfhhr"]
+[ext_resource type="Material" uid="uid://3ub3li5nvjsw" path="res://Arts/structure_material_2.tres" id="2_84g6j"]
+[ext_resource type="PackedScene" uid="uid://bwggrf7sbmkcv" path="res://PlayerCharacter/player_character_scene.tscn" id="3_sl5hh"]
+[ext_resource type="PackedScene" uid="uid://diwimlbwp6g3e" path="res://SourceFiles/Loot/Scenes/AmmoStation.tscn" id="6_7vat8"]
+[ext_resource type="PackedScene" uid="uid://dp2xwv368ud3k" path="res://enemies/enemy_spawner.tscn" id="6_mvnwc"]
+[ext_resource type="PackedScene" uid="uid://dm8lyvvxwuspk" path="res://enemies/explosive_enemy_spawner.tscn" id="7_6hbxu"]
+[ext_resource type="PackedScene" uid="uid://tjragqlxrky5" path="res://enemies/flying_enemy_spawner.tscn" id="8_7byi1"]
+[ext_resource type="PackedScene" uid="uid://pqyhq7x27uqw" path="res://enemies/matreshka_enemy_spawner.tscn" id="9_7vat8"]
+[ext_resource type="PackedScene" uid="uid://blbnteajykd5b" path="res://Map/finish_zone.tscn" id="13_nerh3"]
+
+[sub_resource type="Shader" id="Shader_qptbn"]
+code = "shader_type sky;
+
+uniform float density : hint_range(0.0, 300.0, 1.) = 150.;
+uniform int layer_parascale : hint_range(0, 5, 1) = 2;
+uniform float speedx : hint_range(-10.0, 10.0, 0.1) = 0.2;
+uniform float speedy : hint_range(-10.0, 10.0, 0.1) = 0.;
+uniform float star_horizontal_wave : hint_range(0.0, 10.0, 0.1) = 0.3;
+uniform float star_size : hint_range(0.0, 100.0, 0.1) = 3.0;
+uniform float twinkle_effect : hint_range(0.0, 1.0, 0.1) = 0.6;
+uniform float twinkle_speed : hint_range(0.0, 100.0, 0.1) = 0.3;
+
+uniform float fbm_strength : hint_range(0.0, 3.0, 0.01) = 0.12;
+uniform float fbm_mix : hint_range(0.0, 1.0, 0.01) = 0.07; 
+uniform float fbm_freq : hint_range(0, 200, 1) = 4;
+uniform float fbm_amp : hint_range(0, 10., 0.01) = 1.5;
+uniform float fbm_speed : hint_range(-10.0, 10.0, 0.01) = 5.;
+uniform float warp_scale : hint_range(0, 10., 0.01) = 2.;
+
+uniform float cloud_freq : hint_range(0, 100, 1) = 40;
+uniform float cloud_amp : hint_range(0, 1., 0.01) = 0.02;
+uniform float cloud_speed : hint_range(0, 10., 0.01) = 5.;
+
+uniform float cloud_color_ci1 : hint_range(0, 1., 0.01) = 0.75;
+uniform float cloud_color_ci2 : hint_range(0, 1., 0.01) = 0.45;
+uniform float cloud_color_ci3 : hint_range(0, 1., 0.01) = 0.9;
+uniform float cloud_color_shiftx : hint_range(-100, 100., 0.5) = 0.;
+uniform float cloud_color_shifty : hint_range(-100, 100., 0.5) = 0.;
+
+uniform vec3 background_color : source_color = vec3(0.02, 0.04, 0.12);
+uniform float fixed_rand_seed : hint_range(0.0, 1000.0) = 42.0;
+
+float onedx(float x) {
+    return abs(x) < 0.0001 ? 1.0 : 1.0 / x;
+}
+
+float onedx2(float x) {
+    return onedx(x) * onedx(x);
+}
+
+float getBetaW(float x, float f, float size) {
+    return size * x * PI / f;
+}
+
+float getBetaH(float y, float f, float size) {
+    return size * y * PI / f;
+}
+
+float getI(vec2 uv, float f, vec2 SIZE) {
+    return onedx2(getBetaW(uv.x, f, SIZE.x)) * onedx2(getBetaH(uv.y, f, SIZE.y));
+}
+
+float random(vec2 st) {
+    return fract(sin(dot(st.xy, vec2(12.9898, 78.233))) * 43759.5453123);
+}
+
+float noise(vec2 st) {
+    vec2 i = floor(st);
+    vec2 f = fract(st);
+
+    float a = random(i);
+    float b = random(i + vec2(1.0, 0.0));
+    float c = random(i + vec2(0.0, 1.0));
+    float d = random(i + vec2(1.0, 1.0));
+
+    vec2 u = f * f * (3.0 - 2.0 * f);
+
+    return mix(a, b, u.x) + (c - a) * u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
+}
+
+float fbm(vec2 st) {
+    float value = 0.0;
+    float freq = fbm_freq;
+    float amp = fbm_amp;
+
+    for (int i = 0; i < 5; i++) {
+        value += amp * noise(st * freq);
+        freq *= 2.7;
+        amp *= 0.5;
+    }
+
+    return value;
+}
+
+vec2 clouduv(vec2 uv, float time, vec2 centers[3]) {
+    const vec2 flowDir = vec2(0.20, -0.07);
+    
+    vec2 cloud_shiftspeed = time * vec2(speedx, speedy) * fbm_speed;
+    vec2 p = uv * warp_scale - cloud_shiftspeed;
+    vec2 warp = vec2(
+        fbm(p + vec2(5.2, 1.3) + time * flowDir * 1.2),
+        fbm(p + vec2(-2.8, 3.1) - time * flowDir * 0.9)
+    );
+
+    uv += (warp - 0.5) * fbm_strength;
+
+    for (int i = 0; i < 3; i++) {
+        vec2 toC = uv - centers[i];
+        float r = length(toC) + 1e-6;
+        float rip = sin(r * cloud_freq - time * cloud_speed) * cloud_amp;
+        uv += normalize(toC) * rip;
+    }
+
+    return uv;
+}
+
+vec2 getSnowflakeWorldCenter(vec2 gridId, vec2 timeOffset, vec2 snowOffset, float layerScale) {
+    return (gridId + snowOffset + timeOffset) / layerScale;
+}
+
+vec2 rotate(vec2 uv, float addtheta) {
+    float theta = atan(uv.y, uv.x) + addtheta;
+    float r = sqrt(uv.x * uv.x + uv.y * uv.y);
+    return vec2(r * cos(theta), r * sin(theta));
+}
+
+void sky() {
+    vec2 st = SKY_COORDS.xy;
+    vec3 color = background_color;
+    vec2 cuv = (st - 0.5) * 2.0;
+
+    if (AT_CUBEMAP_PASS) {
+        // Упрощённая версия для кубемапы (без анимации)
+        float static_noise = random(vec2(fixed_rand_seed, st.x * 100.0)) * 0.05;
+        COLOR = background_color + vec3(static_noise * 0.1);
+    } else {
+        // Основной проход — полная версия с эффектами
+        for (int layer = 0; layer < 4; layer++) {
+            float layerScale = exp(float(layer * layer_parascale + 1) * density * 0.002);
+            vec2 layerSpeed = vec2(speedx, speedy) * vec2(1.0 + float(layer) * 0.3);
+            float layerSize = star_size * (1.0 - float(layer) * 0.2);
+
+            vec2 layerSt = st * layerScale;
+            vec2 cuvSt = cuv;
+
+            vec2 timeOffset = TIME * layerSpeed * 1.0;
+            layerSt -= timeOffset;
+
+            vec2 gridSt = fract(layerSt);
+            vec2 gridId = floor(layerSt);
+
+            float randSeed = random(gridId + fixed_rand_seed);
+
+            vec2 snowPos = vec2(
+                0.5 + 0.3 * sin(randSeed * 6.28 + TIME * star_horizontal_wave),
+                0.5 + 0.2 * cos(randSeed * 12.56)
+            );
+
+            float dist = distance(gridSt, snowPos);
+            float snowSize = layerSize * 0.01 * (0.5 + 0.5 * randSeed);
+            float brightness = 1.0 - float(layer) * 0.3;
+
+            float M = exp(-dist * dist / (snowSize * snowSize));
+            float rotateAngle = 0.01 * (TIME * cos(randSeed * 120.0 + TIME * 0.05));
+
+            vec2 fst = rotate(cuvSt - (getSnowflakeWorldCenter(gridId, timeOffset, snowPos, layerScale) - 0.5) * 2.0, rotateAngle);
+            float snowflake = M * 0.5 * (getI(fst, 0.8 - dist * 42.0, vec2(1.0 / snowSize)) + 1.0);
+
+            float twinkle = (1.0 - twinkle_effect) + twinkle_effect * (sin(randSeed * 100.0 + TIME * twinkle_speed) * cos(randSeed * 120.0 + TIME * (twinkle_speed + 2.0)));
+            snowflake *= twinkle;
+
+            vec3 colortype = vec3(random(gridId - 3.0), random(gridId + 7.0), random(gridId + 5.0));
+            color = max(color + (snowflake * brightness) * colortype, color);
+        }
+
+        // Облака
+        vec2 centers[3];
+        centers[0] = vec2(-0.3, 0.4);
+        centers[1] = vec2(0.7, -0.5);
+        centers[2] = vec2(-0.5, 0.7);
+
+        vec2 cloud_uv = cuv - vec2(cloud_color_shiftx, cloud_color_shifty);
+        vec2 fuv = clouduv(cloud_uv, TIME, centers);
+        
+        vec3 cloud_color = vec3(
+            fuv.x * (1.0 - cloud_color_ci1) + fuv.y * cloud_color_ci2,
+            fuv.x * (1.0 - cloud_color_ci3) + fuv.y * cloud_color_ci2,
+            fuv.x * (1.0 - cloud_color_ci3) + fuv.y * cloud_color_ci1
+        );
+        
+        COLOR = mix(color, cloud_color, fbm_mix);
+    }
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_84g6j"]
+shader = SubResource("Shader_qptbn")
+shader_parameter/density = 146.0
+shader_parameter/layer_parascale = 5
+shader_parameter/speedx = 1.490119991842676e-07
+shader_parameter/speedy = 1.490119991842676e-07
+shader_parameter/star_horizontal_wave = 0.10000000149012
+shader_parameter/star_size = 2.10000003129252
+shader_parameter/twinkle_effect = 0.0
+shader_parameter/twinkle_speed = 0.0
+shader_parameter/fbm_strength = 0.0
+shader_parameter/fbm_mix = 0.00999999977648
+shader_parameter/fbm_freq = 0.0
+shader_parameter/fbm_amp = 0.0
+shader_parameter/fbm_speed = -10.0
+shader_parameter/warp_scale = 0.0
+shader_parameter/cloud_freq = 0.0
+shader_parameter/cloud_amp = 0.0
+shader_parameter/cloud_speed = 0.0
+shader_parameter/cloud_color_ci1 = 0.999999977648
+shader_parameter/cloud_color_ci2 = 0.999999977648
+shader_parameter/cloud_color_ci3 = 1.0
+shader_parameter/cloud_color_shiftx = -100.0
+shader_parameter/cloud_color_shifty = 4.5
+shader_parameter/background_color = Color(0.02, 0.04, 0.12, 1)
+shader_parameter/fixed_rand_seed = 42.190002004025
+
+[sub_resource type="Sky" id="Sky_n76jb"]
+sky_material = SubResource("ShaderMaterial_84g6j")
+process_mode = 1
+
+[sub_resource type="Environment" id="Environment_sl5hh"]
+background_mode = 2
+background_energy_multiplier = 1.3
+sky = SubResource("Sky_n76jb")
+adjustment_enabled = true
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_7byi1"]
+vertices = PackedVector3Array(-1.7043629, -0.0971365, -2.916803, -1.4543629, -0.0971365, -5.666803, -11.204363, -0.0971365, -5.666803, -11.204363, -0.0971365, -2.916803, 17.045637, -0.0971365, 1.3331971, 17.045637, -0.0971365, -0.16680288, 15.045637, -0.0971365, -0.16680288, 10.045637, -0.0971365, 1.3331971, -0.20436287, -0.0971365, 0.5831971, -1.7043629, -0.0971365, 0.5831971, -1.4543629, -0.0971365, 3.333197, 9.795637, -0.0971365, 3.333197, -0.20436287, -0.0971365, -2.916803, 10.545637, -0.0971365, -5.666803, -0.20436287, 0.1528635, -1.9168029, -0.20436287, 0.1528635, -0.41680288, 14.795637, -0.0971365, -2.166803, 19.545637, -0.0971365, -2.416803, 19.795637, -0.0971365, -3.666803, 10.795637, -0.0971365, -3.666803, -10.704363, 5.4028635, -1.9168029, -10.704363, 5.4028635, -0.41680288, 21.545637, -0.0971365, -2.166803, 25.795637, -0.0971365, -3.666803, 37.79564, -0.0971365, 3.333197, 38.04564, -0.0971365, 0.5831971, 36.54564, -0.0971365, 0.5831971, 25.295637, -0.0971365, 3.333197, 36.54564, -0.0971365, -2.916803, 38.04564, -0.0971365, -2.916803, 37.79564, -0.0971365, -5.666803, 26.045637, -0.0971365, -5.666803, 21.295637, -0.0971365, -0.16680288, 25.045637, -0.0971365, 1.3331971, 36.54564, 0.1528635, -1.9168029, 36.54564, 0.1528635, -0.41680288, 47.04564, 5.4028635, -0.41680288, 47.04564, 5.4028635, -1.9168029, 47.79564, -0.0971365, -2.916803, 47.79564, -0.0971365, -5.666803, -10.454363, -0.0971365, -1.6668029, -10.454363, -0.0971365, -0.6668029, -3.7043629, -0.0971365, -0.6668029, -3.7043629, -0.0971365, -1.6668029, 40.04564, -0.0971365, -1.6668029, 40.04564, -0.0971365, -0.6668029, 46.79564, -0.0971365, -0.6668029, 46.79564, -0.0971365, -1.6668029, -11.204363, -0.0971365, 0.5831971, -11.204363, -0.0971365, 3.333197, 47.79564, -0.0971365, 3.333197, 47.79564, -0.0971365, 0.5831971)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1), PackedInt32Array(5, 4, 6), PackedInt32Array(6, 4, 7), PackedInt32Array(9, 8, 10), PackedInt32Array(10, 8, 11), PackedInt32Array(0, 1, 12), PackedInt32Array(12, 1, 13), PackedInt32Array(11, 15, 14), PackedInt32Array(17, 16, 18), PackedInt32Array(18, 16, 19), PackedInt32Array(11, 8, 15), PackedInt32Array(16, 6, 19), PackedInt32Array(19, 6, 7), PackedInt32Array(15, 21, 14), PackedInt32Array(14, 21, 20), PackedInt32Array(13, 19, 7), PackedInt32Array(7, 11, 13), PackedInt32Array(13, 11, 14), PackedInt32Array(13, 14, 12), PackedInt32Array(17, 18, 22), PackedInt32Array(22, 18, 23), PackedInt32Array(25, 24, 26), PackedInt32Array(26, 24, 27), PackedInt32Array(29, 28, 30), PackedInt32Array(30, 28, 31), PackedInt32Array(5, 32, 4), PackedInt32Array(4, 32, 33), PackedInt32Array(31, 28, 34), PackedInt32Array(34, 37, 35), PackedInt32Array(35, 37, 36), PackedInt32Array(32, 22, 33), PackedInt32Array(33, 22, 23), PackedInt32Array(31, 34, 35), PackedInt32Array(27, 33, 23), PackedInt32Array(23, 31, 27), PackedInt32Array(27, 31, 35), PackedInt32Array(27, 35, 26), PackedInt32Array(38, 29, 39), PackedInt32Array(39, 29, 30), PackedInt32Array(43, 42, 40), PackedInt32Array(40, 42, 41), PackedInt32Array(47, 46, 44), PackedInt32Array(44, 46, 45), PackedInt32Array(48, 9, 49), PackedInt32Array(49, 9, 10), PackedInt32Array(51, 50, 25), PackedInt32Array(25, 50, 24)]
+
+[node name="Example_map" type="Node3D" unique_id=1462987145]
+
+[node name="WorldEnvironment2" type="WorldEnvironment" parent="." unique_id=773538999]
+environment = SubResource("Environment_sl5hh")
+
+[node name="PlayerCharacter" parent="." unique_id=1479123383 instance=ExtResource("3_sl5hh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.195067, 0)
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=229804740]
+transform = Transform3D(-4.371139e-08, 0, 6, 0, 1, 0, -1, 0, -2.6226832e-07, 7.163306, 1.499999, 18.164139)
+navigation_mesh = SubResource("NavigationMesh_7byi1")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D" unique_id=481370855]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 0.16666667, 0, -7.2852315e-09, 18.299139, -1.0971365, -1.1668028)
+use_collision = true
+collision_mask = 2
+size = Vector3(60, 1, 60.007)
+material = ExtResource("1_mfhhr")
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="NavigationRegion3D" unique_id=2059518546]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 0.16666667, 0, -7.2852315e-09, 18.18235, 11.8395605, -1.1927288)
+use_collision = true
+collision_mask = 2
+size = Vector3(5.894, 24.908, 5.67)
+material = ExtResource("2_84g6j")
+
+[node name="CSGPolygon3" type="CSGPolygon3D" parent="NavigationRegion3D" unique_id=1380068696]
+transform = Transform3D(-1, 0, -8.742279e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, -2.3816538)
+use_collision = true
+collision_mask = 2
+polygon = PackedVector2Array(-0.3263111, -0.6025109, 11.027277, 5.1700993, 11, -1)
+depth = 2.38
+material = ExtResource("2_84g6j")
+
+[node name="CSGPolygon4" type="CSGPolygon3D" parent="NavigationRegion3D" unique_id=1821747103]
+transform = Transform3D(-7.28523e-09, 0, 6, 0, 1, 0, -0.16666667, 0, -2.6226832e-07, 25.408016, 0, -4.221825)
+use_collision = true
+collision_mask = 2
+polygon = PackedVector2Array(-0.3263111, -0.6025109, 11.027277, 5.1700993, 11, -1)
+depth = 2.38
+material = ExtResource("2_84g6j")
+
+[node name="CSGPolygon5" type="CSGPolygon3D" parent="NavigationRegion3D" unique_id=1156128137]
+transform = Transform3D(-7.28523e-09, 0, -6, 0, 1, 0, 0.16666667, 0, -2.6226832e-07, 10.464093, 0, 1.8359996)
+use_collision = true
+collision_mask = 2
+polygon = PackedVector2Array(-0.3263111, -0.6025109, 11.027277, 5.1700993, 11, -1)
+depth = 2.38
+material = ExtResource("2_84g6j")
+
+[node name="CSGPolygon6" type="CSGPolygon3D" parent="NavigationRegion3D" unique_id=377757555]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.365044, 0, 0.0012130737)
+use_collision = true
+collision_mask = 2
+polygon = PackedVector2Array(-0.3263111, -0.6025109, 11.027277, 5.1700993, 11, -1)
+depth = 2.38
+material = ExtResource("2_84g6j")
+
+[node name="map" type="Node3D" parent="." unique_id=177810789]
+
+[node name="CSGBox3D18" type="CSGBox3D" parent="map" unique_id=755817084]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0.5097008, 8.86858, 29.488821)
+use_collision = true
+collision_layer = 5
+collision_mask = 2
+size = Vector3(58.99521, 16.675228, 1.0327148)
+material = ExtResource("2_84g6j")
+
+[node name="CSGBox3D19" type="CSGBox3D" parent="map" unique_id=1079501843]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0.056797028, 8.86858, -29.471918)
+use_collision = true
+collision_layer = 5
+collision_mask = 2
+size = Vector3(58.0894, 16.675228, 1.0327148)
+material = ExtResource("2_84g6j")
+
+[node name="CSGBox3D17" type="CSGBox3D" parent="map" unique_id=306502424]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -29.488806, 8.842062, 0.02148819)
+use_collision = true
+collision_layer = 5
+collision_mask = 2
+size = Vector3(59.9729, 16.675228, 1)
+material = ExtResource("2_84g6j")
+
+[node name="CSGBox3D20" type="CSGBox3D" parent="map" unique_id=788858614]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 29.483017, 8.842062, -0.5070076)
+use_collision = true
+collision_layer = 5
+collision_mask = 2
+size = Vector3(58.88977, 16.675228, 1)
+material = ExtResource("2_84g6j")
+
+[node name="Light" type="Node3D" parent="." unique_id=2095120268]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.352509, 22.4541, -3.4161634)
+
+[node name="OmniLight3D20" type="OmniLight3D" parent="Light" unique_id=372677527]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5532894, -6.247919, -12.737752)
+light_energy = 16.0
+light_indirect_energy = 0.0
+omni_range = 33.386345
+
+[node name="OmniLight3D21" type="OmniLight3D" parent="Light" unique_id=1580347526]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5532894, -6.247919, 12.052655)
+light_energy = 16.0
+light_indirect_energy = 0.0
+omni_range = 33.386345
+
+[node name="OmniLight3D22" type="OmniLight3D" parent="Light" unique_id=22225988]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.189175, -6.247919, 12.052655)
+light_energy = 16.0
+light_indirect_energy = 0.0
+omni_range = 33.386345
+
+[node name="OmniLight3D23" type="OmniLight3D" parent="Light" unique_id=1531081166]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.189175, -6.247919, -9.229842)
+light_energy = 16.0
+light_indirect_energy = 0.0
+omni_range = 33.386345
+
+[node name="AmmoStation" parent="." unique_id=254746381 instance=ExtResource("6_7vat8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.009792328, 1.9063423, -4.405363)
+collision_mask = 3
+
+[node name="FinishZone" parent="." unique_id=1319319796 instance=ExtResource("13_nerh3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00304991, 26.563719, 0.24637914)
+
+[node name="EnemySpawner" parent="." unique_id=1299883884 instance=ExtResource("6_mvnwc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.198227, 0.99508107, -22.12154)
+
+[node name="EnemySpawner2" parent="." unique_id=1542855234 instance=ExtResource("7_6hbxu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.118963, 0.95286447, -22.199656)
+
+[node name="EnemySpawner3" parent="." unique_id=493421305 instance=ExtResource("8_7byi1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.656738, 0.95286447, 22.16696)
+spawn_count = 3
+
+[node name="EnemySpawner4" parent="." unique_id=1032779194 instance=ExtResource("9_7vat8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.251846, 0.95286447, 22.183558)

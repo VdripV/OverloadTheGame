@@ -8,12 +8,12 @@ extends CharacterBody3D
 
 const SPEED = 5.5
 const ATTACK_RANGE = 3.0
-const DETECTION_RANGE = 20.0
+const DETECTION_RANGE = 50.0
 const INVESTIGATE_TIME = 3.0
 const PATROL_SPEED = 3.0
 const INVESTIGATE_SPEED = 4.5
 
-var Damage = 25
+var Damage = 5
 var Health = 3
 
 enum STATE {

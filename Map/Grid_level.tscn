@@ -8,6 +8,10 @@
 [ext_resource type="PackedScene" uid="uid://d4gavwq81shmv" path="res://Map/MovementModifiers/conveyorZone/conveyor_zone_scene.tscn" id="6_35ypq"]
 [ext_resource type="PackedScene" uid="uid://ctf1yf3optph8" path="res://Map/MovementModifiers/gravityZone/gravity_zone_scene.tscn" id="7_ukx34"]
 [ext_resource type="PackedScene" uid="uid://bqgwlh6y8rm1h" path="res://Map/MovementModifiers/conveyorZone/enemies/enemy.tscn" id="8_3eqwe"]
+[ext_resource type="PackedScene" uid="uid://dp2xwv368ud3k" path="res://enemies/enemy_spawner.tscn" id="9_ahrku"]
+[ext_resource type="PackedScene" uid="uid://tjragqlxrky5" path="res://enemies/flying_enemy_spawner.tscn" id="10_lsm70"]
+[ext_resource type="PackedScene" uid="uid://pqyhq7x27uqw" path="res://enemies/matreshka_enemy_spawner.tscn" id="11_uqhis"]
+[ext_resource type="PackedScene" uid="uid://dm8lyvvxwuspk" path="res://enemies/explosive_enemy_spawner.tscn" id="12_75ufs"]
 
 [sub_resource type="Shader" id="Shader_qptbn"]
 code = "shader_type sky;
@@ -457,3 +461,15 @@ patrol_path = NodePath("../NavigationRegion3D/PatrolPath2")
 [node name="Enemy3" parent="." unique_id=1296485706 node_paths=PackedStringArray("patrol_path") instance=ExtResource("8_3eqwe")]
 transform = Transform3D(2.2, 0, 0, 0, 2.2, 0, 0, 0, 2.2, -80.783936, 18.062773, -919.35535)
 patrol_path = NodePath("../NavigationRegion3D/PatrolPath3")
+
+[node name="EnemySpawner" parent="." unique_id=1299883884 instance=ExtResource("9_ahrku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -113.745155, 13.550002, -879.656)
+
+[node name="EnemySpawner2" parent="." unique_id=1192302440 instance=ExtResource("10_lsm70")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -106.067795, 13.550002, -875.46783)
+
+[node name="EnemySpawner3" parent="." unique_id=1875561779 instance=ExtResource("11_uqhis")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -109.84171, 13.550002, -865.7494)
+
+[node name="EnemySpawner4" parent="." unique_id=1364745227 instance=ExtResource("12_75ufs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -116.81829, 13.550002, -871.6855)

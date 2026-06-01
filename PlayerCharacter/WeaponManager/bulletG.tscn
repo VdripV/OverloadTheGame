@@ -18,7 +18,7 @@ color_ramp = SubResource("Gradient_708kk")
 albedo_color = Color(0, 0, 0, 1)
 emission_enabled = true
 emission = Color(0.28235295, 0.7019608, 0.5568628, 1)
-emission_energy_multiplier = 6.48
+emission_energy_multiplier = 13.09
 emission_texture = SubResource("NoiseTexture2D_gjhag")
 
 [sub_resource type="SphereMesh" id="SphereMesh_3gkp5"]

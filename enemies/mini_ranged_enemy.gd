@@ -4,7 +4,7 @@ extends CharacterBody3D
 
 const SPEED = 5.0
 const ATTACK_RANGE = 12.0
-const DETECTION_RANGE = 25.0
+const DETECTION_RANGE = 50.0
 const IDEAL_DISTANCE = 8.0
 const INVESTIGATE_TIME = 3.0
 const PATROL_SPEED = 3.0

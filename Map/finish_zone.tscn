@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://blbnteajykd5b"]
+
+[ext_resource type="Script" uid="uid://bqfiw6scgwhfx" path="res://Map/finishZone.gd" id="1_p83hv"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2x40j"]
+
+[node name="FinishZone" type="Area3D" unique_id=1319319796]
+collision_mask = 3
+script = ExtResource("1_p83hv")
+level_name = "Arena"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1539745043]
+shape = SubResource("BoxShape3D_2x40j")

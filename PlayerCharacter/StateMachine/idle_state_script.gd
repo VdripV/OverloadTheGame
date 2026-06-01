@@ -33,14 +33,10 @@ func physics_update(delta : float):
 	move(delta)
 	
 func applies(delta : float):
-	#manage the appliements of things that needs to be set/checked/performed every frame
 	if play_char.hit_ground_cooldown > 0.0: play_char.hit_ground_cooldown -= delta
 	
-	#i don't know why, but if i put this line in verifications, it broke the jump cooldown, because he constantly stay at -1.0
 	if play_char.jump_cooldown > 0.0: play_char.jump_cooldown = -1.0
 	
-	#manage the appliements and state transitions that needs to be sets/checked/performed
-	#every time the play char pass through one of the following : floor-inair-onwall
 	if !play_char.is_on_floor() and !play_char.is_on_wall():
 		transitioned.emit(self, "InairState")
 		

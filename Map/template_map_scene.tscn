@@ -9,29 +9,17 @@
 [ext_resource type="PackedScene" uid="uid://d4gavwq81shmv" path="res://Map/MovementModifiers/conveyorZone/conveyor_zone_scene.tscn" id="7_q4rg5"]
 [ext_resource type="PackedScene" uid="uid://ct3rwravhrwk1" path="res://Map/MovementModifiers/jumpPads/directionalJumpPad/directional_jump_pad_scene.tscn" id="8_q4rg5"]
 [ext_resource type="PackedScene" uid="uid://8wolti2rkt2q" path="res://Map/Spawnable_Weapons/blaster_d.tscn" id="9_43v1x"]
-[ext_resource type="Script" uid="uid://bqfiw6scgwhfx" path="res://Map/finishZone.gd" id="9_ohmtu"]
 [ext_resource type="PackedScene" uid="uid://bxwjpayjtdd2g" path="res://Map/Spawnable_Weapons/blaster_k.tscn" id="10_pdlds"]
 [ext_resource type="PackedScene" uid="uid://7m3mdu2x8gld" path="res://Map/Spawnable_Weapons/blaster_n.tscn" id="11_7oo5g"]
-<<<<<<< Updated upstream
-[ext_resource type="PackedScene" uid="uid://vg7qxjhtbr0n" path="res://SourceFiles/Loot/Scenes/HealthPickup.tscn" id="14_3xxql"]
 [ext_resource type="PackedScene" uid="uid://dqm1p77wxcmdh" path="res://SourceFiles/box.tscn" id="14_tg4r2"]
-=======
-[ext_resource type="PackedScene" uid="uid://dqm1p77wxcmdh" path="res://Map/items/box.tscn" id="14_tg4r2"]
->>>>>>> Stashed changes
 [ext_resource type="PackedScene" uid="uid://ycceh25m5av6" path="res://Map/Spawnable_Weapons/blaster_g.tscn" id="15_4kf67"]
 [ext_resource type="PackedScene" uid="uid://b4r4jtf0j42hg" path="res://enemies/explosive_enemy.tscn" id="16_tg4r2"]
 [ext_resource type="PackedScene" uid="uid://b8le38x6u2ec1" path="res://enemies/matreshka_enemy.tscn" id="17_u4pme"]
 [ext_resource type="PackedScene" uid="uid://dp2xwv368ud3k" path="res://enemies/enemy_spawner.tscn" id="18_ff8lg"]
-<<<<<<< Updated upstream
-[ext_resource type="PackedScene" uid="uid://bqgwlh6y8rm1h" path="res://enemies/enemy.tscn" id="19_f2jo1"]
-[ext_resource type="PackedScene" uid="uid://djhok0gmwl5sv" path="res://enemies/flying_enemy.tscn" id="20_5q7o8"]
-=======
 [ext_resource type="PackedScene" uid="uid://bqgwlh6y8rm1h" path="res://Map/MovementModifiers/conveyorZone/enemies/enemy.tscn" id="19_f2jo1"]
-[ext_resource type="PackedScene" uid="uid://djhok0gmwl5sv" path="res://Map/MovementModifiers/conveyorZone/enemies/flying_enemy.tscn" id="20_5q7o8"]
->>>>>>> Stashed changes
+[ext_resource type="PackedScene" uid="uid://djhok0gmwl5sv" path="res://enemies/flying_enemy.tscn" id="20_5q7o8"]
 [ext_resource type="PackedScene" uid="uid://dm8lyvvxwuspk" path="res://enemies/explosive_enemy_spawner.tscn" id="20_crb2t"]
 [ext_resource type="PackedScene" uid="uid://tjragqlxrky5" path="res://enemies/flying_enemy_spawner.tscn" id="21_ohmtu"]
-[ext_resource type="PackedScene" uid="uid://diwimlbwp6g3e" path="res://SourceFiles/Loot/Scenes/AmmoStation.tscn" id="22_5q7o8"]
 [ext_resource type="PackedScene" uid="uid://pqyhq7x27uqw" path="res://enemies/matreshka_enemy_spawner.tscn" id="23_3xxql"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_fjbi6"]
@@ -70,9 +58,6 @@ _data = {
 "tilts": PackedFloat32Array(0, 0)
 }
 point_count = 2
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_3xxql"]
-size = Vector3(3.1031551, 1, 3.458496)
 
 [node name="TemplateMap" type="Node3D" unique_id=1644857194]
 
@@ -432,16 +417,6 @@ path_u_distance = 1.0
 path_joined = false
 material = ExtResource("4_ivwfa")
 
-[node name="Area3D" type="Area3D" parent="Map" unique_id=1537834693]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.701173, 1.5620737, 11.313563)
-collision_layer = 3
-collision_mask = 3
-script = ExtResource("9_ohmtu")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Map/Area3D" unique_id=73055298]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.626531, 0, -1.229248)
-shape = SubResource("BoxShape3D_3xxql")
-
 [node name="blasterD" parent="." unique_id=1904445761 instance=ExtResource("9_43v1x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.538757, 2.0798402, -15.848989)
 
@@ -453,7 +428,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.556976, 2.1313643, -20.774
 
 [node name="Enemy" parent="." unique_id=1087826163 instance=ExtResource("19_f2jo1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.075085, 1.5, -10.17486)
-health_pickup_scene = ExtResource("14_3xxql")
 
 [node name="FlyingEnemy" parent="." unique_id=1385896642 instance=ExtResource("20_5q7o8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.344463, 6.4850016, -1.1191697)
@@ -514,8 +488,3 @@ spawn_radius = 15.0
 [node name="EnemySpawner4" parent="." unique_id=626809331 instance=ExtResource("23_3xxql")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56.204056, 0.55, -36.822433)
 enemy_scene = ExtResource("17_u4pme")
-
-[node name="AmmoStation" parent="." unique_id=254746381 instance=ExtResource("22_5q7o8")]
-transform = Transform3D(0.9335179, 0, 0.35853088, 0, 1, 0, -0.35853088, 0, 0.9335179, 8.03653, 1.9626306, -24.550148)
-collision_layer = 3
-collision_mask = 3
