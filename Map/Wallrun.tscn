@@ -6,7 +6,7 @@
 [ext_resource type="MeshLibrary" uid="uid://cdnv28gu2gf4k" path="res://wallrunmesh.meshlib" id="3_dpdfh"]
 [ext_resource type="Script" uid="uid://dwnl3y5gsvvg3" path="res://Map/fall_zone.gd" id="4_mspd2"]
 [ext_resource type="Script" uid="uid://dpnhoyk81p03i" path="res://Map/check_point.gd" id="6_0fmlw"]
-[ext_resource type="PackedScene" uid="uid://dqm1p77wxcmdh" path="res://SourceFiles/box.tscn" id="7_0fmlw"]
+[ext_resource type="PackedScene" uid="uid://dqm1p77wxcmdh" path="res://Map/items/box.tscn" id="7_0fmlw"]
 [ext_resource type="PackedScene" uid="uid://bqgwlh6y8rm1h" path="res://Map/MovementModifiers/conveyorZone/enemies/enemy.tscn" id="8_pcmid"]
 [ext_resource type="PackedScene" uid="uid://djhok0gmwl5sv" path="res://Map/MovementModifiers/conveyorZone/enemies/flying_enemy.tscn" id="9_fhaak"]
 

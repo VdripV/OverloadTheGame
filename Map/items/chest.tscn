@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://c0ecrnr8glml0"]
+
+[ext_resource type="PackedScene" uid="uid://cgbrdp13yhhu2" path="res://SourceFiles/glTF/Props/Prop_Chest.gltf" id="1_orev4"]
+[ext_resource type="Material" uid="uid://b25vq4f14j2ob" path="res://SourceFiles/Textures/Standard_materials/1_trim_02.tres" id="2_t8g00"]
+[ext_resource type="Material" uid="uid://q7fatnl85818" path="res://SourceFiles/Textures/Standard_materials/0_trim_01.tres" id="3_omhll"]
+
+[node name="Prop_Chest2" unique_id=587536422 instance=ExtResource("1_orev4")]
+
+[node name="Skeleton3D" parent="Chest_Armature" parent_id_path=PackedInt32Array(997400522) index="0" unique_id=1461018326]
+bones/2/rotation = Quaternion(-0.8761856, -2.6433962e-23, 1.9455226e-16, 0.4819739)
+
+[node name="Prop_Chest" parent="Chest_Armature/Skeleton3D" index="0" unique_id=184793308]
+surface_material_override/0 = ExtResource("2_t8g00")
+surface_material_override/1 = ExtResource("3_omhll")
+
+[node name="Prop_Chest_Top" parent="Chest_Armature/Skeleton3D" index="1" unique_id=1553842645]
+surface_material_override/0 = ExtResource("2_t8g00")
+surface_material_override/1 = ExtResource("3_omhll")

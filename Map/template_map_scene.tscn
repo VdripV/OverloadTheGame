@@ -12,14 +12,23 @@
 [ext_resource type="Script" uid="uid://bqfiw6scgwhfx" path="res://Map/finishZone.gd" id="9_ohmtu"]
 [ext_resource type="PackedScene" uid="uid://bxwjpayjtdd2g" path="res://Map/Spawnable_Weapons/blaster_k.tscn" id="10_pdlds"]
 [ext_resource type="PackedScene" uid="uid://7m3mdu2x8gld" path="res://Map/Spawnable_Weapons/blaster_n.tscn" id="11_7oo5g"]
+<<<<<<< Updated upstream
 [ext_resource type="PackedScene" uid="uid://vg7qxjhtbr0n" path="res://SourceFiles/Loot/Scenes/HealthPickup.tscn" id="14_3xxql"]
 [ext_resource type="PackedScene" uid="uid://dqm1p77wxcmdh" path="res://SourceFiles/box.tscn" id="14_tg4r2"]
+=======
+[ext_resource type="PackedScene" uid="uid://dqm1p77wxcmdh" path="res://Map/items/box.tscn" id="14_tg4r2"]
+>>>>>>> Stashed changes
 [ext_resource type="PackedScene" uid="uid://ycceh25m5av6" path="res://Map/Spawnable_Weapons/blaster_g.tscn" id="15_4kf67"]
 [ext_resource type="PackedScene" uid="uid://b4r4jtf0j42hg" path="res://enemies/explosive_enemy.tscn" id="16_tg4r2"]
 [ext_resource type="PackedScene" uid="uid://b8le38x6u2ec1" path="res://enemies/matreshka_enemy.tscn" id="17_u4pme"]
 [ext_resource type="PackedScene" uid="uid://dp2xwv368ud3k" path="res://enemies/enemy_spawner.tscn" id="18_ff8lg"]
+<<<<<<< Updated upstream
 [ext_resource type="PackedScene" uid="uid://bqgwlh6y8rm1h" path="res://enemies/enemy.tscn" id="19_f2jo1"]
 [ext_resource type="PackedScene" uid="uid://djhok0gmwl5sv" path="res://enemies/flying_enemy.tscn" id="20_5q7o8"]
+=======
+[ext_resource type="PackedScene" uid="uid://bqgwlh6y8rm1h" path="res://Map/MovementModifiers/conveyorZone/enemies/enemy.tscn" id="19_f2jo1"]
+[ext_resource type="PackedScene" uid="uid://djhok0gmwl5sv" path="res://Map/MovementModifiers/conveyorZone/enemies/flying_enemy.tscn" id="20_5q7o8"]
+>>>>>>> Stashed changes
 [ext_resource type="PackedScene" uid="uid://dm8lyvvxwuspk" path="res://enemies/explosive_enemy_spawner.tscn" id="20_crb2t"]
 [ext_resource type="PackedScene" uid="uid://tjragqlxrky5" path="res://enemies/flying_enemy_spawner.tscn" id="21_ohmtu"]
 [ext_resource type="PackedScene" uid="uid://diwimlbwp6g3e" path="res://SourceFiles/Loot/Scenes/AmmoStation.tscn" id="22_5q7o8"]

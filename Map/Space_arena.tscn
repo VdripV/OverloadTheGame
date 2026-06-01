@@ -1,8 +1,430 @@
 [gd_scene format=3 uid="uid://8gctb4mnfwq2"]
 
-[sub_resource type="MeshLibrary" id="MeshLibrary_1h7xi"]
+[ext_resource type="MeshLibrary" uid="uid://dehwe2aweimbk" path="res://spacemesh.meshlib" id="1_qa8k2"]
+[ext_resource type="PackedScene" uid="uid://bwggrf7sbmkcv" path="res://PlayerCharacter/player_character_scene.tscn" id="2_aweim"]
+[ext_resource type="PackedScene" uid="uid://c0ecrnr8glml0" path="res://Map/items/chest.tscn" id="3_aweim"]
+[ext_resource type="PackedScene" uid="uid://tjragqlxrky5" path="res://enemies/flying_enemy_spawner.tscn" id="4_yxbw7"]
+[ext_resource type="PackedScene" uid="uid://djhok0gmwl5sv" path="res://enemies/flying_enemy.tscn" id="5_x7c05"]
+
+[sub_resource type="Shader" id="Shader_qptbn"]
+code = "shader_type sky;
+
+uniform float density : hint_range(0.0, 300.0, 1.) = 150.;
+uniform int layer_parascale : hint_range(0, 5, 1) = 2;
+uniform float speedx : hint_range(-10.0, 10.0, 0.1) = 0.2;
+uniform float speedy : hint_range(-10.0, 10.0, 0.1) = 0.;
+uniform float star_horizontal_wave : hint_range(0.0, 10.0, 0.1) = 0.3;
+uniform float star_size : hint_range(0.0, 100.0, 0.1) = 3.0;
+uniform float twinkle_effect : hint_range(0.0, 1.0, 0.1) = 0.6;
+uniform float twinkle_speed : hint_range(0.0, 100.0, 0.1) = 0.3;
+
+uniform float fbm_strength : hint_range(0.0, 3.0, 0.01) = 0.12;
+uniform float fbm_mix : hint_range(0.0, 1.0, 0.01) = 0.07; 
+uniform float fbm_freq : hint_range(0, 200, 1) = 4;
+uniform float fbm_amp : hint_range(0, 10., 0.01) = 1.5;
+uniform float fbm_speed : hint_range(-10.0, 10.0, 0.01) = 5.;
+uniform float warp_scale : hint_range(0, 10., 0.01) = 2.;
+
+uniform float cloud_freq : hint_range(0, 100, 1) = 40;
+uniform float cloud_amp : hint_range(0, 1., 0.01) = 0.02;
+uniform float cloud_speed : hint_range(0, 10., 0.01) = 5.;
+
+uniform float cloud_color_ci1 : hint_range(0, 1., 0.01) = 0.75;
+uniform float cloud_color_ci2 : hint_range(0, 1., 0.01) = 0.45;
+uniform float cloud_color_ci3 : hint_range(0, 1., 0.01) = 0.9;
+uniform float cloud_color_shiftx : hint_range(-100, 100., 0.5) = 0.;
+uniform float cloud_color_shifty : hint_range(-100, 100., 0.5) = 0.;
+
+uniform vec3 background_color : source_color = vec3(0.02, 0.04, 0.12);
+uniform float fixed_rand_seed : hint_range(0.0, 1000.0) = 42.0;
+
+float onedx(float x) {
+    return abs(x) < 0.0001 ? 1.0 : 1.0 / x;
+}
+
+float onedx2(float x) {
+    return onedx(x) * onedx(x);
+}
+
+float getBetaW(float x, float f, float size) {
+    return size * x * PI / f;
+}
+
+float getBetaH(float y, float f, float size) {
+    return size * y * PI / f;
+}
+
+float getI(vec2 uv, float f, vec2 SIZE) {
+    return onedx2(getBetaW(uv.x, f, SIZE.x)) * onedx2(getBetaH(uv.y, f, SIZE.y));
+}
+
+float random(vec2 st) {
+    return fract(sin(dot(st.xy, vec2(12.9898, 78.233))) * 43759.5453123);
+}
+
+float noise(vec2 st) {
+    vec2 i = floor(st);
+    vec2 f = fract(st);
+
+    float a = random(i);
+    float b = random(i + vec2(1.0, 0.0));
+    float c = random(i + vec2(0.0, 1.0));
+    float d = random(i + vec2(1.0, 1.0));
+
+    vec2 u = f * f * (3.0 - 2.0 * f);
+
+    return mix(a, b, u.x) + (c - a) * u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
+}
+
+float fbm(vec2 st) {
+    float value = 0.0;
+    float freq = fbm_freq;
+    float amp = fbm_amp;
+
+    for (int i = 0; i < 5; i++) {
+        value += amp * noise(st * freq);
+        freq *= 2.7;
+        amp *= 0.5;
+    }
+
+    return value;
+}
+
+vec2 clouduv(vec2 uv, float time, vec2 centers[3]) {
+    const vec2 flowDir = vec2(0.20, -0.07);
+    
+    vec2 cloud_shiftspeed = time * vec2(speedx, speedy) * fbm_speed;
+    vec2 p = uv * warp_scale - cloud_shiftspeed;
+    vec2 warp = vec2(
+        fbm(p + vec2(5.2, 1.3) + time * flowDir * 1.2),
+        fbm(p + vec2(-2.8, 3.1) - time * flowDir * 0.9)
+    );
+
+    uv += (warp - 0.5) * fbm_strength;
+
+    for (int i = 0; i < 3; i++) {
+        vec2 toC = uv - centers[i];
+        float r = length(toC) + 1e-6;
+        float rip = sin(r * cloud_freq - time * cloud_speed) * cloud_amp;
+        uv += normalize(toC) * rip;
+    }
+
+    return uv;
+}
+
+vec2 getSnowflakeWorldCenter(vec2 gridId, vec2 timeOffset, vec2 snowOffset, float layerScale) {
+    return (gridId + snowOffset + timeOffset) / layerScale;
+}
+
+vec2 rotate(vec2 uv, float addtheta) {
+    float theta = atan(uv.y, uv.x) + addtheta;
+    float r = sqrt(uv.x * uv.x + uv.y * uv.y);
+    return vec2(r * cos(theta), r * sin(theta));
+}
+
+void sky() {
+    vec2 st = SKY_COORDS.xy;
+    vec3 color = background_color;
+    vec2 cuv = (st - 0.5) * 2.0;
+
+    if (AT_CUBEMAP_PASS) {
+        // Упрощённая версия для кубемапы (без анимации)
+        float static_noise = random(vec2(fixed_rand_seed, st.x * 100.0)) * 0.05;
+        COLOR = background_color + vec3(static_noise * 0.1);
+    } else {
+        // Основной проход — полная версия с эффектами
+        for (int layer = 0; layer < 4; layer++) {
+            float layerScale = exp(float(layer * layer_parascale + 1) * density * 0.002);
+            vec2 layerSpeed = vec2(speedx, speedy) * vec2(1.0 + float(layer) * 0.3);
+            float layerSize = star_size * (1.0 - float(layer) * 0.2);
+
+            vec2 layerSt = st * layerScale;
+            vec2 cuvSt = cuv;
+
+            vec2 timeOffset = TIME * layerSpeed * 1.0;
+            layerSt -= timeOffset;
+
+            vec2 gridSt = fract(layerSt);
+            vec2 gridId = floor(layerSt);
+
+            float randSeed = random(gridId + fixed_rand_seed);
+
+            vec2 snowPos = vec2(
+                0.5 + 0.3 * sin(randSeed * 6.28 + TIME * star_horizontal_wave),
+                0.5 + 0.2 * cos(randSeed * 12.56)
+            );
+
+            float dist = distance(gridSt, snowPos);
+            float snowSize = layerSize * 0.01 * (0.5 + 0.5 * randSeed);
+            float brightness = 1.0 - float(layer) * 0.3;
+
+            float M = exp(-dist * dist / (snowSize * snowSize));
+            float rotateAngle = 0.01 * (TIME * cos(randSeed * 120.0 + TIME * 0.05));
+
+            vec2 fst = rotate(cuvSt - (getSnowflakeWorldCenter(gridId, timeOffset, snowPos, layerScale) - 0.5) * 2.0, rotateAngle);
+            float snowflake = M * 0.5 * (getI(fst, 0.8 - dist * 42.0, vec2(1.0 / snowSize)) + 1.0);
+
+            float twinkle = (1.0 - twinkle_effect) + twinkle_effect * (sin(randSeed * 100.0 + TIME * twinkle_speed) * cos(randSeed * 120.0 + TIME * (twinkle_speed + 2.0)));
+            snowflake *= twinkle;
+
+            vec3 colortype = vec3(random(gridId - 3.0), random(gridId + 7.0), random(gridId + 5.0));
+            color = max(color + (snowflake * brightness) * colortype, color);
+        }
+
+        // Облака
+        vec2 centers[3];
+        centers[0] = vec2(-0.3, 0.4);
+        centers[1] = vec2(0.7, -0.5);
+        centers[2] = vec2(-0.5, 0.7);
+
+        vec2 cloud_uv = cuv - vec2(cloud_color_shiftx, cloud_color_shifty);
+        vec2 fuv = clouduv(cloud_uv, TIME, centers);
+        
+        vec3 cloud_color = vec3(
+            fuv.x * (1.0 - cloud_color_ci1) + fuv.y * cloud_color_ci2,
+            fuv.x * (1.0 - cloud_color_ci3) + fuv.y * cloud_color_ci2,
+            fuv.x * (1.0 - cloud_color_ci3) + fuv.y * cloud_color_ci1
+        );
+        
+        COLOR = mix(color, cloud_color, fbm_mix);
+    }
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_aweim"]
+shader = SubResource("Shader_qptbn")
+shader_parameter/density = 146.0
+shader_parameter/layer_parascale = 5
+shader_parameter/speedx = 1.490119991842676e-07
+shader_parameter/speedy = 1.490119991842676e-07
+shader_parameter/star_horizontal_wave = 0.10000000149012
+shader_parameter/star_size = 2.10000003129252
+shader_parameter/twinkle_effect = 0.0
+shader_parameter/twinkle_speed = 0.0
+shader_parameter/fbm_strength = 0.0
+shader_parameter/fbm_mix = 0.00999999977648
+shader_parameter/fbm_freq = 0.0
+shader_parameter/fbm_amp = 0.0
+shader_parameter/fbm_speed = -10.0
+shader_parameter/warp_scale = 0.0
+shader_parameter/cloud_freq = 0.0
+shader_parameter/cloud_amp = 0.0
+shader_parameter/cloud_speed = 0.0
+shader_parameter/cloud_color_ci1 = 0.999999977648
+shader_parameter/cloud_color_ci2 = 0.999999977648
+shader_parameter/cloud_color_ci3 = 1.0
+shader_parameter/cloud_color_shiftx = -100.0
+shader_parameter/cloud_color_shifty = 4.5
+shader_parameter/background_color = Color(0.02, 0.04, 0.12, 1)
+shader_parameter/fixed_rand_seed = 42.190002004025
+
+[sub_resource type="Sky" id="Sky_n76jb"]
+sky_material = SubResource("ShaderMaterial_aweim")
+process_mode = 1
+
+[sub_resource type="Environment" id="Environment_yxbw7"]
+background_mode = 2
+background_energy_multiplier = 1.3
+sky = SubResource("Sky_n76jb")
+adjustment_enabled = true
 
 [node name="SpaceArena" type="Node3D" unique_id=1794673609]
 
 [node name="GridMap" type="GridMap" parent="." unique_id=810815007]
-mesh_library = SubResource("MeshLibrary_1h7xi")
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+mesh_library = ExtResource("1_qa8k2")
+cell_size = Vector3(1, 1, 1)
+collision_layer = 5
+collision_mask = 2
+data = {
+"cells": PackedInt32Array(65533, 3, 1048580, 1, 3, 1048580, 65533, 7, 1048580, 1, 7, 1048580, 65530, 65530, 655396, 8, 65532, 1048612, 9, 65532, 1048581, 9, 65535, 1048581, 9, 3, 1048581, 9, 7, 1048581, 6, 13, 655394, 6, 15, 655384, 65528, 11, 1048610, 65530, 7, 22, 65530, 3, 22, 65530, 65535, 22, 65530, 65531, 22, 65534, 65532, 1441814, 2, 65532, 1441814, 6, 65532, 1441814, 6, 0, 655382, 6, 4, 655382, 6, 8, 655382, 6, 11, 655382, 2, 11, 1048598, 65534, 11, 1048598, 65530, 11, 1048598, 65529, 7, 1048580, 65528, 3, 1048580, 65532, 3, 1048580, 65528, 65535, 1048580, 65528, 65531, 1048580, 65532, 65531, 1048580, 65532, 65532, 1048580, 65532, 65535, 1048580, 0, 65531, 1048580, 4, 65531, 1048580, 6, 65531, 1048580, 65535, 65535, 1048580, 3, 65535, 1048580, 6, 65535, 1048580, 5, 3, 1048580, 5, 7, 1048580, 7, 11, 1048580, 3, 11, 1048580, 65535, 11, 1048580, 65531, 11, 1048580, 65527, 11, 1048580, 196614, 0, 524299, 196614, 4, 524299, 196614, 8, 524299, 196614, 11, 655382, 196610, 11, 1048598, 262142, 11, 524299, 262138, 11, 524299, 262138, 7, 524299, 262138, 3, 524299, 262138, 65535, 524299, 262138, 65532, 22, 262142, 65532, 524299, 196610, 65532, 524299, 196614, 65532, 524299, 65523, 9, 1441797, 65519, 9, 1441797, 65519, 13, 1441797, 65523, 13, 1441797, 65529, 20, 1441797, 65529, 16, 1441797, 65528, 15, 1441797, 65525, 16, 1441797, 65525, 14, 1441797, 6, 19, 655382, 8, 19, 1048598, 4, 19, 1048598, 5, 20, 22, 5, 16, 22, 5, 15, 22, 2, 15, 1441814, 7, 15, 1441797, 3, 15, 1441797, 5, 18, 1441797, 4, 20, 1441797, 8, 20, 1441797, 8, 18, 1441797, 10, 65532, 1441812, 65530, 65527, 21, 65530, 65523, 21, 65530, 65524, 1441814, 65534, 65524, 1441815, 65528, 65527, 1048581, 65528, 65523, 1048581, 65532, 65527, 1048581, 0, 65527, 1048581, 65532, 65524, 1048581, 65526, 65524, 1441814, 65534, 65528, 1048598, 65535, 65523, 1048581, 65533, 65528, 655382, 65533, 65524, 655382, 14, 65532, 1441812, 13, 65532, 5, 13, 65531, 655380, 13, 65535, 655380, 14, 65534, 1048596, 10, 65534, 1048596, 10, 0, 22, 16, 0, 5, 12, 65535, 5, 65526, 15, 655382, 65527, 15, 1048598, 65523, 15, 1048598, 65519, 15, 1048598, 65520, 16, 22, 65520, 12, 22, 65520, 8, 24, 65520, 9, 1441814, 65524, 9, 1441814, 65526, 9, 1441814, 65526, 7, 655382, 65521, 17, 655365, 65519, 17, 655365, 65525, 8, 655365, 262142, 7, 524299, 262142, 3, 524299, 262138, 65531, 524299, 262138, 65527, 524299, 262142, 65527, 524299, 262141, 65523, 524299, 262138, 65523, 524299, 262142, 65535, 524299, 196610, 0, 524299, 196610, 4, 524299, 196610, 8, 524299, 196610, 12, 524299, 196614, 12, 524299, 196614, 15, 524299, 196611, 16, 524299, 196611, 19, 524299, 196614, 20, 524299, 196614, 19, 524299, 196618, 65534, 524299, 196621, 65534, 524299, 196621, 65532, 524299, 196618, 65532, 524299, 262142, 65529, 524299, 262134, 11, 524299, 262134, 15, 524299, 262134, 7, 524299, 262130, 7, 524299, 262130, 11, 524299, 262130, 15, 524299, 262126, 16, 524299, 262126, 12, 524299, 262126, 8, 524299, 262126, 5, 524299, 262136, 8, 1245212, 262136, 6, 1245212, 262136, 4, 1245212, 262136, 2, 1245212, 262136, 0, 1245212, 262136, 65534, 1245212, 262136, 65532, 1245212, 262141, 65530, 262172, 262143, 65530, 262172, 196609, 65530, 262172, 196611, 65530, 262172, 196613, 65530, 262172, 196615, 65530, 262172, 196616, 65535, 1507356, 196616, 1, 1507356, 196616, 3, 1507356, 196616, 5, 1507356, 196616, 7, 1507356, 196616, 9, 1507356, 196616, 11, 1507356, 196611, 13, 917532, 196609, 13, 917532, 262143, 13, 917532, 262141, 13, 917532, 262138, 13, 917532, 262135, 7, 851997, 262135, 17, 327709, 196616, 18, 589851, 196616, 19, 589851, 196615, 21, 327707, 196614, 21, 327707, 196613, 21, 327707, 196612, 21, 327707, 196611, 18, 65563, 196611, 17, 65563, 196611, 15, 65563, 196611, 14, 65563, 262143, 65528, 589851, 262143, 65529, 589851, 262143, 65527, 589851, 262143, 65526, 589851, 262143, 65525, 589851, 262143, 65524, 589851, 262143, 65523, 589851, 196620, 65530, 524316, 196619, 65530, 524316, 196623, 65532, 1310748, 196623, 65533, 1310748, 196623, 65534, 1310748, 196610, 7, 655386, 262143, 8, 1048602, 196610, 2, 1441818, 262143, 4, 26)
+}
+metadata/_editor_floor_ = Vector3(0, 3, 0)
+
+[node name="PlayerCharacter" parent="." unique_id=1479123383 instance=ExtResource("2_aweim")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.1222515, 11.334896, 27.80371)
+
+[node name="Prop_Chest2" parent="." unique_id=587536422 instance=ExtResource("3_aweim")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2036152, 0, 20.007677)
+visible = false
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="." unique_id=2076936220]
+transform = Transform3D(0.7071068, 4.214685e-08, -0.7071068, 0.35355338, 0.86602545, 0.3535534, 0.6123725, -0.5, 0.6123725, -130, 196.79614, -838.1102)
+visible = false
+light_color = Color(0.9372549, 0.96862745, 1, 1)
+light_energy = 1.321
+light_indirect_energy = 16.0
+light_volumetric_fog_energy = 16.0
+light_specular = 1.784
+light_bake_mode = 1
+light_cull_mask = 4294967293
+
+[node name="WorldEnvironment2" type="WorldEnvironment" parent="." unique_id=1351559020]
+environment = SubResource("Environment_yxbw7")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=343406098]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55.74433, 17.00393, -28.804348)
+light_energy = 16.0
+light_indirect_energy = 0.0
+omni_range = 33.386345
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="." unique_id=1128215704]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 77.9809, 17.00393, -10.885664)
+light_energy = 16.0
+light_indirect_energy = 0.0
+omni_range = 33.386345
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="." unique_id=523210984]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.531399, 17.00393, -26.048594)
+light_energy = 16.0
+light_indirect_energy = 0.0
+omni_range = 33.386345
+
+[node name="OmniLight3D4" type="OmniLight3D" parent="." unique_id=336917703]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.8374596, 17.00393, -26.701275)
+light_energy = 16.0
+light_indirect_energy = 0.0
+omni_range = 33.386345
+
+[node name="OmniLight3D5" type="OmniLight3D" parent="." unique_id=1200529304]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.592129, 17.00393, -26.460293)
+light_energy = 16.0
+light_indirect_energy = 0.0
+omni_range = 33.386345
+
+[node name="OmniLight3D6" type="OmniLight3D" parent="." unique_id=1501440006]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.029247, 17.00393, -2.444275)
+light_energy = 16.0
+light_indirect_energy = 0.0
+omni_range = 33.386345
+
+[node name="OmniLight3D7" type="OmniLight3D" parent="." unique_id=1736345239]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.029247, 17.00393, 17.951206)
+light_energy = 16.0
+light_indirect_energy = 0.0
+omni_range = 33.386345
+
+[node name="OmniLight3D8" type="OmniLight3D" parent="." unique_id=672952117]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.878895, 17.00393, 36.97129)
+light_energy = 16.0
+light_indirect_energy = 0.0
+omni_range = 33.386345
+
+[node name="OmniLight3D9" type="OmniLight3D" parent="." unique_id=1330070394]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.911156, 17.00393, 59.261925)
+light_energy = 16.0
+light_indirect_energy = 0.0
+omni_range = 33.386345
+
+[node name="OmniLight3D10" type="OmniLight3D" parent="." unique_id=323972209]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.92147, 17.00393, 63.50551)
+light_energy = 16.0
+light_indirect_energy = 0.0
+omni_range = 33.386345
+
+[node name="OmniLight3D11" type="OmniLight3D" parent="." unique_id=464490090]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.912241, 17.00393, 65.32805)
+light_energy = 16.0
+light_indirect_energy = 0.0
+omni_range = 33.386345
+
+[node name="OmniLight3D12" type="OmniLight3D" parent="." unique_id=1194220498]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.69644, 17.00393, 65.32805)
+light_energy = 16.0
+light_indirect_energy = 0.0
+omni_range = 33.386345
+
+[node name="OmniLight3D13" type="OmniLight3D" parent="." unique_id=1801035622]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.914642, 17.00393, 31.990726)
+light_energy = 16.0
+light_indirect_energy = 0.0
+omni_range = 33.386345
+
+[node name="OmniLight3D14" type="OmniLight3D" parent="." unique_id=806662502]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.914642, 17.00393, 10.9704895)
+light_energy = 16.0
+light_indirect_energy = 0.0
+omni_range = 33.386345
+
+[node name="OmniLight3D15" type="OmniLight3D" parent="." unique_id=165765569]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.97503, 17.00393, -20.518879)
+light_energy = 16.0
+light_indirect_energy = 0.0
+omni_range = 33.386345
+
+[node name="OmniLight3D16" type="OmniLight3D" parent="." unique_id=1506018809]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.124748, 17.00393, -1.7549152)
+light_energy = 16.0
+light_indirect_energy = 0.0
+omni_range = 33.386345
+
+[node name="OmniLight3D17" type="OmniLight3D" parent="." unique_id=801449453]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.478458, 17.00393, 8.015549)
+light_energy = 16.0
+light_indirect_energy = 0.0
+omni_range = 33.386345
+
+[node name="OmniLight3D18" type="OmniLight3D" parent="." unique_id=555814174]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.05578, 15.363239, 55.992523)
+light_energy = 16.0
+light_indirect_energy = 0.0
+omni_range = 33.386345
+
+[node name="OmniLight3D19" type="OmniLight3D" parent="." unique_id=1885863964]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.304173, 16.20618, 50.422096)
+light_energy = 16.0
+light_indirect_energy = 0.0
+omni_range = 33.386345
+
+[node name="OmniLight3D20" type="OmniLight3D" parent="." unique_id=1318738861]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.827198, 16.20618, 28.745438)
+light_energy = 16.0
+light_indirect_energy = 0.0
+omni_range = 33.386345
+
+[node name="OmniLight3D21" type="OmniLight3D" parent="." unique_id=279843763]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.086014, 17.00393, 92.94352)
+light_energy = 16.0
+light_indirect_energy = 0.0
+omni_range = 33.386345
+
+[node name="OmniLight3D22" type="OmniLight3D" parent="." unique_id=1303624091]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.741089, 17.00393, 92.94352)
+light_energy = 16.0
+light_indirect_energy = 0.0
+omni_range = 33.386345
+
+[node name="OmniLight3D23" type="OmniLight3D" parent="." unique_id=1171687723]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42.14224, 17.00393, 39.684593)
+light_energy = 16.0
+light_indirect_energy = 0.0
+omni_range = 33.386345
+
+[node name="OmniLight3D24" type="OmniLight3D" parent="." unique_id=2055192737]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42.14224, 17.00393, 86.35545)
+light_energy = 16.0
+light_indirect_energy = 0.0
+omni_range = 33.386345
+
+[node name="OmniLight3D25" type="OmniLight3D" parent="." unique_id=717700395]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -82.73393, 17.00393, 63.067375)
+light_energy = 16.0
+light_indirect_energy = 0.0
+omni_range = 33.386345
+
+[node name="OmniLight3D26" type="OmniLight3D" parent="." unique_id=1302160845]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.2437572, 17.00393, -50.86891)
+light_energy = 16.0
+light_indirect_energy = 0.0
+omni_range = 33.386345
+
+[node name="OmniLight3D27" type="OmniLight3D" parent="." unique_id=273474224]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.23671, 17.00393, -50.86891)
+light_energy = 16.0
+light_indirect_energy = 0.0
+omni_range = 33.386345
+
+[node name="EnemySpawner" parent="." unique_id=1299883884 instance=ExtResource("4_yxbw7")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -14, 2.5294266, -58)
+
+[node name="FlyingEnemy" parent="." unique_id=1385896642 instance=ExtResource("5_x7c05")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -21.87428, 4.269103, -56.42229)
