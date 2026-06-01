@@ -12,7 +12,8 @@ const NO_MUSIC_SCENES = [
 	"res://UI/Scenes/cutscene.tscn",
 	"res://UI/Scenes/HUD.tscn",
 	"res://UI/Scenes/pause.tscn",
-	"res://Map/template_map_scene.tscn"
+	"res://Map/template_map_scene.tscn",
+	"res://Map/Space_arena.tscn"
 ]
 
 func _ready() -> void:
