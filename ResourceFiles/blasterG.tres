@@ -2,6 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://dl3s5of32pgx6" path="res://PlayerCharacter/WeaponManager/bulletG.tscn" id="1_5phhh"]
 [ext_resource type="Script" uid="uid://chb7ydncy2n24" path="res://PlayerCharacter/WeaponManager/weapon_resource.gd" id="1_iw3pr"]
+[ext_resource type="AudioStream" uid="uid://q2rik6k5l0q2" path="res://audio/reload.wav" id="2_jlftl"]
+[ext_resource type="AudioStream" uid="uid://b3w4hufkib58y" path="res://audio/gunshot.wav" id="3_yu2ln"]
 
 [resource]
 script = ExtResource("1_iw3pr")
@@ -21,3 +23,5 @@ Damage = 20
 Type = 2
 Projectile_To_Load = ExtResource("1_5phhh")
 Projectile_Velocity = 20
+Shoot_Sounds = ExtResource("3_yu2ln")
+Reload_Sounds = ExtResource("2_jlftl")

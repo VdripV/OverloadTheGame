@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://b4r4jtf0j42hg"]
 
-[ext_resource type="Script" uid="uid://dr36a1q0rdwyp" path="res://enemies/enemy.gd" id="1_vepm8"]
-[ext_resource type="PackedScene" uid="uid://vg7qxjhtbr0n" path="res://SourceFiles/Loot/Scenes/HealthPickup.tscn" id="2_vqcnt"]
+[ext_resource type="Script" uid="uid://bg6kppecsqm87" path="res://enemies/explosive_enemy.gd" id="1_l76gm"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7frlh"]
 
@@ -12,8 +11,7 @@ albedo_color = Color(0.68336344, 0.51973665, 0.96744055, 1)
 material = SubResource("StandardMaterial3D_vepm8")
 
 [node name="Enemy" type="CharacterBody3D" unique_id=1087826163]
-script = ExtResource("1_vepm8")
-health_pickup_scene = ExtResource("2_vqcnt")
+script = ExtResource("1_l76gm")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1432493661]
 shape = SubResource("CapsuleShape3D_7frlh")

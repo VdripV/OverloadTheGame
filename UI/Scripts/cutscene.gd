@@ -28,6 +28,7 @@ var _hint_alpha  : float = 0.0
 var _hint_fading : bool  = false
 
 func _ready():
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	var font_variation = FontVariation.new()
 	font_variation.base_font = load("res://UI/Assets/Fonts/BuilderMono-Regular-400_0.ttf")
 	font_variation.spacing_glyph = 4
@@ -130,6 +131,7 @@ func _advance():
 	_waiting   = false
 	_para_idx += 1
 	if _para_idx >= PARAGRAPHS.size():
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		get_tree().change_scene_to_file("res://UI/Scenes/menu.tscn")
 		return
 	_shown_text += "\n\n"

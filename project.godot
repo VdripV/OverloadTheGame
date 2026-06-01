@@ -11,8 +11,12 @@ config_version=5
 [application]
 
 config/name="Main"
-run/main_scene="uid://dunxwr8j4oh07"
+run/main_scene="uid://cf77p0h1xbuoe"
 config/features=PackedStringArray("4.6", "Forward Plus")
+
+[audio]
+
+buses/default_bus_layout="uid://bc8n1oln71ney"
 
 [autoload]
 

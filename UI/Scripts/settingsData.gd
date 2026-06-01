@@ -31,21 +31,21 @@ var keybinds: Dictionary = {
 }
 
 var keybind_labels: Dictionary = {
-	"play_char_move_forward_action":  "Вперёд",
-	"play_char_move_backward_action": "Назад",
-	"play_char_move_left_ation":      "Влево",
-	"play_char_move_right_action":    "Вправо",
-	"play_char_run_action":           "Спринт",
-	"play_char_crouch_action":        "Присед",
-	"play_char_jump_action":          "Прыжок",
-	"play_char_slide_action":         "Слайд",
-	"play_char_dash_action":          "Рывок",
-	"play_char_fly_action":           "Полёт",
-	"shoot":                          "Выстрел",
-	"reload":                         "Перезарядка",
-	"drop":                           "Выбросить оружие",
-	"weapon_up":                      "Следующее оружие",
-	"weapon_down":                    "Предыдущее оружие",
+	"play_char_move_forward_action":  "Forward",
+	"play_char_move_backward_action": "Backward",
+	"play_char_move_left_ation":      "Left",
+	"play_char_move_right_action":    "Right",
+	"play_char_run_action":           "Sprint",
+	"play_char_crouch_action":        "Crouch",
+	"play_char_jump_action":          "Jump",
+	"play_char_slide_action":         "Slide",
+	"play_char_dash_action":          "Dash",
+	"play_char_fly_action":           "Fly",
+	"shoot":                          "Shoot",
+	"reload":                         "Reload",
+	"drop":                           "Drop weapon",
+	"weapon_up":                      "Next weapon",
+	"weapon_down":                    "Previous weapon",
 }
 
 func _ready() -> void:

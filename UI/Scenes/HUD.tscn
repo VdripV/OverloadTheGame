@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dh8kle052d1yo"]
 
 [ext_resource type="Script" uid="uid://dnpjqfrjyqwpi" path="res://UI/Scripts/HUD.gd" id="1_b6acq"]
+[ext_resource type="FontFile" uid="uid://bnbkeynq2nhvs" path="res://UI/Assets/Fonts/BuilderMono-Bold-700_0.ttf" id="2_lqcly"]
 
 [node name="Hud" type="Control" unique_id=1673443731]
 layout_mode = 3
@@ -13,59 +14,87 @@ mouse_filter = 2
 script = ExtResource("1_b6acq")
 
 [node name="Components" type="VBoxContainer" parent="." unique_id=1183896860]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 106.0
+offset_top = -345.0
+offset_right = 671.0
+offset_bottom = -85.0
+grow_vertical = 0
 
 [node name="HealthBar" type="HBoxContainer" parent="Components" unique_id=1759231338]
 layout_mode = 2
+size_flags_horizontal = 0
 
 [node name="HP" type="Label" parent="Components/HealthBar" unique_id=883724177]
 layout_mode = 2
-text = "    XP"
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("2_lqcly")
+theme_override_font_sizes/font_size = 46
+text = " XP"
 
 [node name="ProgressBar" type="ProgressBar" parent="Components/HealthBar" unique_id=1135951173]
-custom_minimum_size = Vector2(100, 0)
+custom_minimum_size = Vector2(300, 50)
 layout_mode = 2
 
 [node name="Label" type="Label" parent="Components/HealthBar" unique_id=1341339037]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_lqcly")
+theme_override_font_sizes/font_size = 46
 
 [node name="ArmorBar" type="HBoxContainer" parent="Components" unique_id=529701733]
 layout_mode = 2
+size_flags_horizontal = 0
 
 [node name="ARM" type="Label" parent="Components/ArmorBar" unique_id=1058441584]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_lqcly")
+theme_override_font_sizes/font_size = 46
 text = "ARM"
 
 [node name="ProgressBar" type="ProgressBar" parent="Components/ArmorBar" unique_id=171444934]
-custom_minimum_size = Vector2(100, 0)
+custom_minimum_size = Vector2(300, 50)
 layout_mode = 2
 
 [node name="Label" type="Label" parent="Components/ArmorBar" unique_id=341789803]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_lqcly")
+theme_override_font_sizes/font_size = 46
 
 [node name="AmmoDisplay" type="HBoxContainer" parent="Components" unique_id=89123018]
 layout_mode = 2
 
 [node name="CurrentAmmo" type="Label" parent="Components/AmmoDisplay" unique_id=1644245232]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_lqcly")
+theme_override_font_sizes/font_size = 46
 
 [node name="ReserveAmmo" type="Label" parent="Components/AmmoDisplay" unique_id=1278999030]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_lqcly")
+theme_override_font_sizes/font_size = 46
 
 [node name="WeaponDisplay" type="HBoxContainer" parent="Components" unique_id=915047284]
 layout_mode = 2
 
 [node name="WeaponName" type="Label" parent="Components/WeaponDisplay" unique_id=1445491911]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_lqcly")
+theme_override_font_sizes/font_size = 46
 
 [node name="WeaponIcon" type="TextureRect" parent="Components/WeaponDisplay" unique_id=2002713058]
 layout_mode = 2
 
 [node name="TimerLabel" type="Label" parent="." unique_id=259137468]
-layout_mode = 0
-offset_left = 435.0
-offset_top = 19.0
-offset_right = 593.0
-offset_bottom = 78.0
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -79.0
+offset_right = 79.0
+offset_bottom = 59.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_lqcly")
+theme_override_font_sizes/font_size = 46

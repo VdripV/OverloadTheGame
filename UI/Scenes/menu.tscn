@@ -117,3 +117,9 @@ theme_override_font_sizes/font_size = 36
 theme_override_icons/icon = ExtResource("9_a06wa")
 theme_override_styles/normal = SubResource("StyleBoxTexture_2hygc")
 theme_override_styles/hover = SubResource("StyleBoxTexture_ym2hp")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=37310337]
+volume_db = -25.544
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="." unique_id=112501298]
+volume_db = -25.544

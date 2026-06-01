@@ -3,6 +3,8 @@
 [ext_resource type="PackedScene" uid="uid://dtd703gdi4qb3" path="res://PlayerCharacter/WeaponManager/bulletN.tscn" id="1_7h8im"]
 [ext_resource type="Script" uid="uid://chb7ydncy2n24" path="res://PlayerCharacter/WeaponManager/weapon_resource.gd" id="1_milto"]
 [ext_resource type="PackedScene" uid="uid://8wolti2rkt2q" path="res://Map/Spawnable_Weapons/blaster_d.tscn" id="2_8di4w"]
+[ext_resource type="AudioStream" uid="uid://q2rik6k5l0q2" path="res://audio/reload.wav" id="2_777rp"]
+[ext_resource type="AudioStream" uid="uid://b3w4hufkib58y" path="res://audio/gunshot.wav" id="3_1imvg"]
 
 [resource]
 script = ExtResource("1_milto")
@@ -24,4 +26,6 @@ Melee_Damage = 5
 Type = 1
 Projectile_To_Load = ExtResource("1_7h8im")
 Projectile_Velocity = 50
+Shoot_Sounds = ExtResource("3_1imvg")
+Reload_Sounds = ExtResource("2_777rp")
 Weapon_Drop = ExtResource("2_8di4w")
