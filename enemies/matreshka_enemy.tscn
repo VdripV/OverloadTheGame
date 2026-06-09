@@ -1,24 +1,20 @@
 [gd_scene format=3 uid="uid://b8le38x6u2ec1"]
 
 [ext_resource type="Script" uid="uid://bulwbx4tket8s" path="res://enemies/matreshka_enemy.gd" id="1_24cwi"]
+[ext_resource type="PackedScene" uid="uid://haaoq7w1iw8q" path="res://SourceFiles/Textures/enemies_textures/glTF/Enemy_QuadShell.gltf" id="2_mgjm2"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7frlh"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_orwns"]
-albedo_color = Color(0.86886376, 0.28502694, 0.526248, 1)
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_a6vjd"]
-material = SubResource("StandardMaterial3D_orwns")
+radius = 0.85498047
+height = 1.7099609
 
 [node name="Enemy" type="CharacterBody3D" unique_id=1087826163]
 script = ExtResource("1_24cwi")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1432493661]
-transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0)
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0.26220703, 0)
 shape = SubResource("CapsuleShape3D_7frlh")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2024200399]
-transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0)
-mesh = SubResource("CapsuleMesh_a6vjd")
-
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=88540175]
+
+[node name="Enemy_QuadShell" parent="." unique_id=54836556 instance=ExtResource("2_mgjm2")]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, -0.4802982, 0)

@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+@onready var animation_player: AnimationPlayer = $Mike2/AnimationPlayer
+
 @onready var nav_agent = $NavigationAgent3D
 
 @export var patrol_path : Node3D
@@ -304,6 +306,22 @@ func set_state(new_state):
 	
 	current_state = new_state
 	state_timer = 0.0
+	
+	match current_state:
+		STATE.IDLE:
+			play_animation("Idle")
+		STATE.PATROL, STATE.INVESTIGATE:
+			play_animation("Walk")
+		STATE.RUN:
+			play_animation("Walk")
+		STATE.ATTACK:
+			play_animation("Walk")
+
+func play_animation(anim_name: String):
+	if animation_player and animation_player.has_animation(anim_name):
+		if animation_player.current_animation != anim_name:
+			animation_player.play(anim_name)
+			animation_player.get_animation(anim_name).loop_mode = Animation.LOOP_LINEAR
 
 func can_see_player():
 	var player = get_player()

@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://ct3rwravhrwk1" path="res://Map/MovementModifiers/jumpPads/directionalJumpPad/directional_jump_pad_scene.tscn" id="5_8wfg5"]
 [ext_resource type="PackedScene" uid="uid://d4gavwq81shmv" path="res://Map/MovementModifiers/conveyorZone/conveyor_zone_scene.tscn" id="6_35ypq"]
 [ext_resource type="PackedScene" uid="uid://ctf1yf3optph8" path="res://Map/MovementModifiers/gravityZone/gravity_zone_scene.tscn" id="7_ukx34"]
-[ext_resource type="PackedScene" uid="uid://bqgwlh6y8rm1h" path="res://Map/MovementModifiers/conveyorZone/enemies/enemy.tscn" id="8_3eqwe"]
+[ext_resource type="PackedScene" uid="uid://bqgwlh6y8rm1h" path="res://enemies/enemy.tscn" id="8_3eqwe"]
 [ext_resource type="PackedScene" uid="uid://dp2xwv368ud3k" path="res://enemies/enemy_spawner.tscn" id="9_ahrku"]
 [ext_resource type="PackedScene" uid="uid://tjragqlxrky5" path="res://enemies/flying_enemy_spawner.tscn" id="10_lsm70"]
 [ext_resource type="PackedScene" uid="uid://pqyhq7x27uqw" path="res://enemies/matreshka_enemy_spawner.tscn" id="11_uqhis"]

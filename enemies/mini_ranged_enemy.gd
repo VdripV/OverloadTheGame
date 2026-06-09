@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+@onready var anim_player = $Enemy_Trilobite/AnimationPlayer
+
 @onready var nav_agent = $NavigationAgent3D
 
 const SPEED = 5.0
@@ -27,6 +29,9 @@ var current_state : STATE = STATE.IDLE
 var last_known_player_position : Vector3
 var investigate_timer : float = 0.0
 
+var patrol_points : Array = []
+var patrol_index : int = 0
+
 var state_timer : float = 0.0
 const MAX_PATROL_TIME = 30.0
 const MAX_INVESTIGATE_TIME = 15.0
@@ -44,7 +49,11 @@ func _ready():
 	nav_agent.radius = 0.3
 	nav_agent.path_max_distance = 50.0
 	
-	set_state(STATE.IDLE)
+	for i in range(4):
+		var offset = Vector3(randf_range(-15, 15), 0, randf_range(-15, 15))
+		patrol_points.append(global_position + offset)
+	
+	set_state(STATE.PATROL)
 
 func get_player():
 	if not is_inside_tree():
@@ -66,6 +75,8 @@ func _physics_process(delta):
 	match current_state:
 		STATE.IDLE:
 			handle_idle_state(delta)
+		STATE.PATROL:
+			handle_patrol_state(delta)
 		STATE.RUN:
 			handle_run_state(delta)
 		STATE.ATTACK:
@@ -79,6 +90,33 @@ func handle_idle_state(delta):
 	
 	if can_see_player():
 		set_state(STATE.RUN)
+		
+func handle_patrol_state(delta):
+	if can_see_player():
+		set_state(STATE.RUN)
+		return
+	
+	if patrol_points.is_empty():
+		set_state(STATE.IDLE)
+		return
+	
+	var target = patrol_points[patrol_index]
+	target.y = global_position.y
+	nav_agent.set_target_position(target)
+	
+	var next = nav_agent.get_next_path_position()
+	var direction = (next - global_position)
+	direction.y = 0
+	direction = direction.normalized()
+	
+	velocity.x = direction.x * PATROL_SPEED
+	velocity.z = direction.z * PATROL_SPEED
+	look_at(Vector3(next.x, global_position.y, next.z), Vector3.UP)
+	move_and_slide()
+	
+	if global_position.distance_to(target) < 1.5:
+		patrol_index = (patrol_index + 1) % patrol_points.size()
+		set_state(STATE.IDLE)
 
 func handle_run_state(delta):
 	var player = get_player()
@@ -151,11 +189,15 @@ func handle_attack_state(delta):
 
 func shoot_at_player(player):
 	var bullet = bullet_scene.instantiate()
-	bullet.global_position = global_position + (player.global_position - global_position).normalized() * 1.0
-	bullet.Damage = Damage
-	bullet.direction = (player.global_position - global_position).normalized()
-	bullet.look_at_from_position(global_position + bullet.direction, Vector3.UP)
 	get_parent().add_child(bullet)
+	
+	var spawn_pos = global_position + Vector3(0, 1.5, 0)
+	var direction = (player.global_position - spawn_pos).normalized()
+	
+	bullet.global_position = spawn_pos + direction * 2.5
+	bullet.Damage = Damage
+	bullet.direction = direction
+	bullet.look_at_from_position(bullet.global_position + direction, Vector3.UP)
 
 func set_state(new_state):
 	if current_state == new_state:
@@ -164,6 +206,14 @@ func set_state(new_state):
 	current_state = new_state
 	state_timer = 0.0
 	shoot_cooldown = 0.0
+	
+	match new_state:
+		STATE.IDLE:
+			anim_player.play("Idle")
+		STATE.RUN:
+			anim_player.play("Run")
+		STATE.ATTACK:
+			anim_player.play("AttackAuto")
 
 func can_see_player():
 	var player = get_player()
@@ -180,9 +230,12 @@ func target_in_ideal_range():
 
 func Hit_Successful(damage: int, _Direction := Vector3.ZERO, _Position := Vector3.ZERO):
 	Health -= damage
+	anim_player.play("Hit")
 	
 	if current_state == STATE.IDLE:
 		set_state(STATE.RUN)
 	
 	if Health <= 0:
+		anim_player.play("TurnOff")
+		await anim_player.animation_finished
 		queue_free()

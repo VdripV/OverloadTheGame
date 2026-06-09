@@ -1,22 +1,20 @@
 [gd_scene format=3 uid="uid://b4r4jtf0j42hg"]
 
 [ext_resource type="Script" uid="uid://bg6kppecsqm87" path="res://enemies/explosive_enemy.gd" id="1_l76gm"]
+[ext_resource type="PackedScene" uid="uid://cx5j6y78x6vmh" path="res://SourceFiles/Textures/enemies_textures/glTF/Mike.gltf" id="2_vepm8"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7frlh"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vepm8"]
-albedo_color = Color(0.68336344, 0.51973665, 0.96744055, 1)
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_vqcnt"]
-material = SubResource("StandardMaterial3D_vepm8")
+radius = 1.0253906
+height = 2.699829
 
 [node name="Enemy" type="CharacterBody3D" unique_id=1087826163]
 script = ExtResource("1_l76gm")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1432493661]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55426025, 0)
 shape = SubResource("CapsuleShape3D_7frlh")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2024200399]
-mesh = SubResource("CapsuleMesh_vqcnt")
-
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=88540175]
+
+[node name="Mike2" parent="." unique_id=1682599975 instance=ExtResource("2_vepm8")]
+transform = Transform3D(-0.5, 0, -4.371139e-08, 0, 0.5, 0, 4.371139e-08, 0, -0.5, 0, -0.72606987, 0)

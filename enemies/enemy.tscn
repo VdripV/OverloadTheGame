@@ -2,14 +2,9 @@
 
 [ext_resource type="Script" uid="uid://dr36a1q0rdwyp" path="res://enemies/enemy.gd" id="1_fw1ev"]
 [ext_resource type="PackedScene" uid="uid://vg7qxjhtbr0n" path="res://SourceFiles/Loot/Scenes/HealthPickup.tscn" id="2_orwns"]
+[ext_resource type="PackedScene" uid="uid://b5bjtou850dwo" path="res://SourceFiles/Textures/enemies_textures/glTF/Leela.gltf" id="3_orwns"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7frlh"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_orwns"]
-albedo_color = Color(1, 0, 0, 1)
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_a6vjd"]
-material = SubResource("StandardMaterial3D_orwns")
 
 [node name="Enemy" type="CharacterBody3D" unique_id=1087826163]
 script = ExtResource("1_fw1ev")
@@ -19,7 +14,7 @@ drop_chance = 0.3
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1432493661]
 shape = SubResource("CapsuleShape3D_7frlh")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2024200399]
-mesh = SubResource("CapsuleMesh_a6vjd")
-
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=88540175]
+
+[node name="Leela2" parent="." unique_id=1778546722 instance=ExtResource("3_orwns")]
+transform = Transform3D(0.33, 0, 0, 0, 0.33, 0, 0, 0, 0.33, 0, -0.6481113, 0)

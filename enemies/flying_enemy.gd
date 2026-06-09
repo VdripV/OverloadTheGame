@@ -236,6 +236,7 @@ func handle_attack_state(delta):
 		set_state(STATE.INVESTIGATE)
 
 func shoot_at_player(player):
+	play_animation("Attack")
 	var bullet = bullet_scene.instantiate()
 	bullet.global_position = global_position + (player.global_position - global_position).normalized() * 1.5
 	bullet.Damage = Damage
@@ -252,10 +253,14 @@ func set_state(new_state):
 	shoot_cooldown = 0.0
 	
 	match current_state:
-		STATE.IDLE, STATE.PATROL, STATE.INVESTIGATE, STATE.RUN:
+		STATE.IDLE:
 			play_animation("Idle")
+		STATE.PATROL, STATE.INVESTIGATE:
+			play_animation("Idle")
+		STATE.RUN:
+			play_animation("Charging")
 		STATE.ATTACK:
-			play_animation("Attack")
+			play_animation("Idle")
 		STATE.DEATH:
 			play_animation("Hit")
 

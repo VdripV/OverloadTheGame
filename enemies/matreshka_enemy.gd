@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+@onready var animation_player: AnimationPlayer = find_child("AnimationPlayer")
+
 @onready var nav_agent = $NavigationAgent3D
 
 @export var patrol_path : Node3D
@@ -245,6 +247,23 @@ func set_state(new_state):
 	
 	current_state = new_state
 	state_timer = 0.0
+	
+	match current_state:
+		STATE.IDLE:
+			play_animation("Idle")
+		STATE.PATROL, STATE.INVESTIGATE:
+			play_animation("Walk")
+		STATE.RUN:
+			play_animation("Run")
+		STATE.ATTACK:
+			play_animation("Attack")
+		STATE.DEATH:
+			velocity = Vector3.ZERO
+			play_animation("TurnOff")
+			animation_player.animation_finished.connect(func(_anim):
+				spawn_minis()
+				queue_free()
+			, CONNECT_ONE_SHOT)
 
 func can_see_player():
 	var player = get_player()
@@ -259,6 +278,9 @@ func target_in_range():
 	return global_position.distance_to(player.global_position) < ATTACK_RANGE
 
 func Hit_Successful(damage: int, _Direction := Vector3.ZERO, _Position := Vector3.ZERO):
+	if current_state == STATE.DEATH:
+		return
+	
 	Health -= damage
 	
 	if current_state == STATE.PATROL or current_state == STATE.INVESTIGATE:
@@ -268,8 +290,7 @@ func Hit_Successful(damage: int, _Direction := Vector3.ZERO, _Position := Vector
 		set_state(STATE.RUN)
 	
 	if Health <= 0:
-		spawn_minis()
-		queue_free()
+		set_state(STATE.DEATH)
 
 func spawn_minis():
 	for i in range(2):
@@ -282,3 +303,13 @@ func _hit_finished():
 	if player and global_position.distance_to(player.global_position) < ATTACK_RANGE:
 		if player.has_method("hit"):
 			player.hit(Damage)
+
+func play_animation(anim_name: String):
+	if animation_player and animation_player.has_animation(anim_name):
+		if animation_player.current_animation != anim_name:
+			var anim = animation_player.get_animation(anim_name)
+			if anim_name == "TurnOff" or anim_name == "Hit" or anim_name == "Attack":
+				anim.loop_mode = Animation.LOOP_NONE
+			else:
+				anim.loop_mode = Animation.LOOP_LINEAR
+			animation_player.play(anim_name)

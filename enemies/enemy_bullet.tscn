@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bf6tfk5eurvvl"]
 
-[ext_resource type="Script" uid="uid://b42nu8if0khvc" path="res://Map/MovementModifiers/conveyorZone/enemies/enemy_bullet.gd" id="1_rvm4p"]
+[ext_resource type="Script" uid="uid://b42nu8if0khvc" path="res://enemies/enemy_bullet.gd" id="1_rvm4p"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xttcy"]
 transparency = 1
@@ -39,7 +39,7 @@ mesh = SubResource("SphereMesh_dv88p")
 shape = SubResource("SphereShape3D_4byai")
 
 [node name="Area3D" type="Area3D" parent="." unique_id=987741373]
-collision_layer = 0
+collision_mask = 2
 monitorable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=614524157]
